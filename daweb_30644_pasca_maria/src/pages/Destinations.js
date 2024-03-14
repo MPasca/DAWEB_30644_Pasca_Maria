@@ -1,3 +1,6 @@
 export default function Destinations(){
-    return{};
+    return(
+        <div>
+        </div>
+    );
 }
