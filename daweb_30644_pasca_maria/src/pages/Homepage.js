@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Homepage(){
     return(
@@ -7,7 +8,7 @@ export default function Homepage(){
                 <h1 class="h1Title">Where next?</h1>
                 <hr class="titleLine"/>
                 <h2 class="h2Title">Find your next destination</h2>
-                <input class="titleInput" placeholder="Search here" style={{marginBottom:"10%"}}/>
+                <Link to="/search"><btn class="btnTitle" style={{marginBottom:"10%"}}>Search here</btn></Link>
             </div>
             <img class="bgImage" src="seattle.jpg"/>
         </div>

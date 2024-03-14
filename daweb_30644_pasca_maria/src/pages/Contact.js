@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Contact(){
     return(
@@ -7,7 +8,7 @@ export default function Contact(){
                 <hr style={{marginLeft: "-5%", width: "80%"}}/>
                 <div style={{paddingBottom:"1%"}}>
                     <h2 class="h2Contact" style={{display: "inline"}}>Telephone:</h2>
-                    <h2 class="h2Contact" style={{fontSize: "40px", display: "inline", fontWeight:"400"}}>+40733282283</h2>
+                    <h2 class="h2Contact" style={{fontSize: "40px", display: "inline", fontWeight:"400"}}>+40722222222</h2>
                 </div>
                 <div style={{paddingBottom:"1%"}}>
                     <h2 class="h2Contact" style={{display: "inline"}}>Email:</h2>
@@ -18,7 +19,7 @@ export default function Contact(){
                     <h2 class="h2Contact" style={{fontSize: "40px", display: "inline", fontWeight:"400"}}>Cluj-Napoca</h2>
                     <h2 class="h2Contact" style={{fontSize: "40px",fontWeight:"400", marginLeft:"5%"}}>str. XYZ, nr. 42, jud. Cluj, Romania</h2>
                 </div>
-                <button class="btnBack" style={{marginTop:"5%"}}>Back</button>
+                <Link to="/home"><button class="btnBack" style={{marginTop:"5%"}}>Back</button></Link>
             </div>
             <img class="bgImage" src="seattle.jpg"/>
         </div>
