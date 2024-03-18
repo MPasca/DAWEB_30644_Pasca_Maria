@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
 export default function Homepage(){
+    localStorage.setItem("showLocation", "true");
+    localStorage.setItem("showDate", "false");
+    localStorage.setItem("showPeople", "false");
+
     return(
     <div>
         <div style={{display: "inline-flex"}}>

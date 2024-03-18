@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Contact from './pages/Contact';
 import Destinations from './pages/Destinations';
-import Search from './pages/Search';
+import SearchLocation from './pages/SearchLocation';
+import SearchDate from './pages/SearchDate';
+import SearchPeople from './pages/SearchPeople';
 
 export default function App() {
   return (
@@ -25,7 +27,10 @@ export default function App() {
           <Route path="/home" element ={<Homepage/>}/>
           <Route path="/contact" element = {<Contact/>}/>
           <Route path="/destinations" element = {<Destinations/>}/>
-          <Route path="/search" element={<Search/>}/>
+          <Route path="/search" element={<SearchLocation/>}/>
+          <Route path="/search_location" element={<SearchLocation/>}/>
+          <Route path="/search_date" element={<SearchDate/>}/>
+          <Route path="/search_people" element={<SearchPeople/>}/>
         </Routes>
       </BrowserRouter>
     </div>

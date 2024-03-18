@@ -153,8 +153,9 @@ body {
   letter-spacing: 0%;
 }
 
-
-
+.date{
+  display: inline-flex;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
