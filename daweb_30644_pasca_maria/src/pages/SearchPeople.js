@@ -17,8 +17,8 @@ export default function SearchPeople(){
                 <h2 class="h2Title">How many people are going</h2>
                 <input class="btnTitle" placeholder="Type here" style={{marginBottom:"10%", width:"200px", height:"30px"}}
                     id="txtPeople" value={people} onChange={(e) => setPeople(e.target.value)}/>
-                <Link to="/destinations"><button class="btnBack" style={{ display:"flow", marginLeft:"75%", marginTop:"-5%"}} onClick={handleClick}>Next</button></Link>
-                <Link to="/search_date"><button class="btnBack" style={{ display:"flow", marginLeft:"0%", marginTop:"-5%"}}>Back</button></Link>
+                <Link to="/destinations"><button class="btnNav" style={{ display:"block", marginLeft:"75%", marginTop:"-5%"}} onClick={handleClick}>Next</button></Link>
+                <Link to="/search_date"><button class="btnNav" style={{ display:"block", marginLeft:"0%", marginTop:"-5%"}}>Back</button></Link>
             </div>
         </div>
         <img class="bgImage" src="seattle.jpg" style={{display:"inline-flex"}}/>

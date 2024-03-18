@@ -19,7 +19,7 @@ export default function Contact(){
                     <h2 class="h2Contact" style={{fontSize: "40px", display: "inline", fontWeight:"400"}}>Cluj-Napoca</h2>
                     <h2 class="h2Contact" style={{fontSize: "40px",fontWeight:"400", marginLeft:"5%"}}>str. XYZ, nr. 42, jud. Cluj, Romania</h2>
                 </div>
-                <Link to="/home"><button class="btnBack" style={{marginTop:"5%", marginLeft:"-5%"}}>Back</button></Link>
+                <Link to="/home"><button class="btnNav" style={{marginTop:"5%", marginLeft:"-5%"}}>Back</button></Link>
             </div>
             <img class="bgImage" src="seattle.jpg"/>
         </div>
