@@ -2,21 +2,45 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function SearchPeople(){
-    const [people, setPeople] = useState(0);
+    const [adults, setAdults] = useState(0);
+    const [children, setChildren] = useState(0);
+
+    const handleChangeAdults = (noAdults) => {
+        if(noAdults > 0){
+            setAdults(noAdults);
+        }
+        else{
+            setAdults(0);
+        }
+    };
+
+    const handleChangeChildren = (noChildren) => {
+        if(noChildren > 0){
+            setChildren(noChildren);
+        }
+        else{
+            setChildren(0);
+        }
+    }
 
     const handleClick = () => {
-        localStorage.setItem("people", JSON.stringify(people));
+        localStorage.setItem("adults", JSON.stringify(adults));
+        localStorage.setItem("children", JSON.stringify(children));
     } 
 
     return(
         <div style={{display: "inline-flex"}}>
         <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
             <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
-            <hr class="titleLine" style={{marginBottom:"-5%"}}/>
+            <hr class="titleLine"/>
             <div style={{width:"80%", marginTop: "5%"}}>
-                <h2 class="h2Title">How many people are going</h2>
-                <input class="btnTitle" placeholder="Type here" style={{marginBottom:"10%", width:"200px", height:"30px"}}
-                    id="txtPeople" value={people} onChange={(e) => setPeople(e.target.value)}/>
+                <h2 class="h2Title" style={{marginBottom:"1%"}}>How many adults are going?</h2>
+                <input class="btnTitle" placeholder="Type here" style={{marginBottom:"5%", paddingRight:"0px", width:"70px", height:"30px"}}
+                    id="txtAdults" value={adults} onChange={(e) => handleChangeAdults(e.target.value)} type="number"/>
+                <h2 class="h2Title" style={{marginBottom:"1%"}}>How many children are going?</h2>
+                <input class="btnTitle" placeholder="Type here" style={{marginBottom:"10%", paddingRight:"0px", width:"70px", height:"30px"}}
+                    id="txtChildren" value={children} onChange={(e) => handleChangeChildren(e.target.value)} type="number"/>
+
                 <Link to="/destinations"><button class="btnNav" style={{ display:"block", marginLeft:"75%", marginTop:"-5%"}} onClick={handleClick}>Next</button></Link>
                 <Link to="/search_date"><button class="btnNav" style={{ display:"block", marginLeft:"0%", marginTop:"-5%"}}>Back</button></Link>
             </div>
