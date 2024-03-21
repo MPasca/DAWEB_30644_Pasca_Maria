@@ -40,6 +40,7 @@ body {
   margin-bottom: 0%;
   color: #000000;
   background-color: #000000;
+  border: 1px solid black;
 }
 
 .bgImage {
@@ -156,6 +157,35 @@ body {
 .date{
   display: inline-flex;
 }
+
+.lblMinCard{
+  color:black;
+  background-color: transparent;
+  font-size: 24px;
+  text-align: center;
+  width: 302px;
+  height: 59px;
+  align-self: center;
+}
+
+.imgMinCard{
+  width: 334px;
+  height: 334px;
+  border-radius: 38;
+  border: 1px solid black;
+  align-self: center;
+}
+
+.btnMinCard{
+  width: 291px;
+  height: 66px;
+  border-radius: 23;
+  border: 1px solid black;
+  background-color: #ECAF33;
+  font-size: 24px;
+  color:#000000;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
