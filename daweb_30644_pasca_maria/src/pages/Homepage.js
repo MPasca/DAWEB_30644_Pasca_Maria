@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
+import dayjs from 'dayjs';
+
 
 export default function Homepage(){
-    localStorage.clear();
+    localStorage.setItem("chosenLocation", null);
+    localStorage.setItem("adults", "0");
+    localStorage.setItem("children", "0");
+    localStorage.setItem("startDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
+    localStorage.setItem("endDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
+    localStorage.setItem("showOffers", false);
 
     var mock1 ={
         id: 1,
@@ -12,7 +19,8 @@ export default function Homepage(){
         childFriendly: true,
         img: "aveiro.png",
         startDate: new Date("2024-04-09"),
-        startDate: new Date("2024-04-13")
+        endDate: new Date("2024-04-13"),
+        isOffer: true
       };
     
       var mock2 = {
@@ -24,7 +32,8 @@ export default function Homepage(){
         childFriendly: false,
         img: "berlin.png",
         startDate: new Date("2024-04-09"),
-        startDate: new Date("2024-04-13")
+        endDate: new Date("2024-04-13"),
+        isOffer: true
       };
     
       var mock3 = {
@@ -36,7 +45,8 @@ export default function Homepage(){
         childFriendly: false,
         img: "seattle.jpg",
         startDate: new Date("2024-04-09"),
-        startDate: new Date("2024-04-13")
+        endDate: new Date("2024-04-13"),
+        isOffer: false
       };
     
       var mocks = [mock1, mock2, mock3]
@@ -44,7 +54,7 @@ export default function Homepage(){
 
     return(
     <div>
-        <div style={{display: "inline-flex"}}>
+        <div style={{display: "inline-flex",  overflow: "hidden"}}>
             <div style={{width:"80%", marginTop: "5%"}}>
                 <h1 class="h1Title">Where next?</h1>
                 <hr class="titleLine"/>

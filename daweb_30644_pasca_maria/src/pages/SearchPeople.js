@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ValidatePeople from "../validators/ValidatePeople";
 
 export default function SearchPeople(){
     const [adults, setAdults] = useState(0);
@@ -24,12 +25,19 @@ export default function SearchPeople(){
     }
 
     const handleClick = () => {
+        if(ValidatePeople(adults, children)){
+            localStorage.setItem("adults", JSON.stringify(adults));
+            localStorage.setItem("children", JSON.stringify(children));    
+        }
+        else{
+            throw Error("Inadequate number of goers:");
+        }
         localStorage.setItem("adults", JSON.stringify(adults));
-        localStorage.setItem("children", JSON.stringify(children));
+        localStorage.setItem("children", JSON.stringify(children));    
     } 
 
     return(
-        <div style={{display: "inline-flex"}}>
+    <div style={{display: "inline-flex"}}>
         <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
             <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
             <hr class="titleLine"/>
@@ -46,7 +54,7 @@ export default function SearchPeople(){
             </div>
         </div>
         <img class="bgImage" src="seattle.jpg" style={{display:"inline-flex"}}/>
-        </div>
+    </div>
 
     );
 }

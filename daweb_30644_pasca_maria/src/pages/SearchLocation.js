@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export default function SearchLocation(){
     var existingLocations = JSON.parse(localStorage.getItem("mocks")).map((mock) => mock.location);
-    console.log(existingLocations);
     const handleClick = () => {
         localStorage.setItem("chosenLocation", location);
     }
@@ -11,7 +10,7 @@ export default function SearchLocation(){
     const[location, setLocation] = useState(existingLocations[0]);
 
     return(
-        <div style={{display: "inline-flex"}}>
+        <div style={{display: "inline-flex",  overflow: "hidden"}}>
             <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
                 <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
                 <hr class="titleLine" style={{marginBottom:"-5%"}}/>

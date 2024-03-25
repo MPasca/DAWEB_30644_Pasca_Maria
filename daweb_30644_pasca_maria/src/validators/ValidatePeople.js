@@ -10,7 +10,6 @@ export default function ValidatePeople (noAdults, noChildren){
         throw Error("No number of adults specified")
     }
     var sum = parseInt(noAdults) + parseInt(noChildren);
-    console.log(sum);
     if(sum > 8){
         console.log("number of adults: " + noAdults);
         console.log("number of children: " + noChildren);

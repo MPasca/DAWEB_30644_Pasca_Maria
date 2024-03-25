@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Contact(){
     return(
-        <div style={{display: "inline-flex"}}>
+        <div style={{display: "inline-flex",  overflow: "hidden"}}>
             <div style={{paddingLeft: "5%", marginTop:"1%", width:"100%"}}>
                 <h1 class="h1Contact">Contact</h1>
                 <hr style={{marginLeft: "-5%", width: "80%"}}/>

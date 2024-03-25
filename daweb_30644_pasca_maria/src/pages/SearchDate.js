@@ -17,12 +17,12 @@ export default function SearchDate(){
     };
 
     const handleClick = () => {
-        localStorage.setItem("startDate", JSON.stringify(date.startDate));
-        localStorage.setItem("endDate", JSON.stringify(date.endDate));
+        localStorage.setItem("startDate", JSON.stringify(date.startDate).split('T')[0]+"\"");
+        localStorage.setItem("endDate", JSON.stringify(date.endDate).split('T')[0]+"\"");
     }
 
     return(
-    <div style={{display: "inline-flex"}}>
+    <div style={{display: "inline-flex",  overflow: "hidden"}}>
         <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
             <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
             <hr class="titleLine" style={{marginBottom:"-5%"}}/>
