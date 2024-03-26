@@ -22,7 +22,7 @@ export default function SearchDate(){
     }
 
     return(
-    <div style={{display: "inline-flex",  overflow: "hidden"}}>
+    <div style={{display: "inline-flex"}}>
         <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
             <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
             <hr class="titleLine" style={{marginBottom:"-5%"}}/>
@@ -40,7 +40,7 @@ export default function SearchDate(){
                 </div>
             </div>
         </div>
-        <img class="bgImage" src="seattle.jpg" style={{display:"inline-flex", marginLeft:"-23%"}}/>
+        <img class="bgImage" src="seattle.jpg" style={{display:"inline-flex", marginLeft:"-80px"}}/>
     </div>
 
     );

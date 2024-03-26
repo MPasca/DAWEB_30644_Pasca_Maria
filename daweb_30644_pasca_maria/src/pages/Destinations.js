@@ -33,16 +33,13 @@ export default function Destinations(){
     }
 
     const filterResult = () => {
-        console.log("in filtering function");
         var result = existingDestinations;
 
         if(chosenLocation !== 'null'){
-            console.log("chosen location: " + chosenLocation);
             result = result.filter((destination) => destination.location === chosenLocation);
         } 
 
         if(startDate !== null && endDate !== null && startDate !== endDate){
-            console.log("chosen dates:" + startDate + " " + endDate);
             result = result.filter((destination) => destination.startDate >= startDate);
             result = result.filter((destination) => destination.endDate <= endDate);    
         }
@@ -58,6 +55,7 @@ export default function Destinations(){
     const [destinations, setDestinations] = useState(filterResult());
 
     const showDestinations = destinations.map((destination) => {
+        console.log(JSON.parse(destination.id));
         return(
             (!showOffers || (showOffers && destination.isOffer)) &&
             <div class="divMinCard">
@@ -67,7 +65,7 @@ export default function Destinations(){
                  <p class="lblMinCard" style={{marginTop:"5px", padding:"0px"}}>SPECIAL OFFER: 10% OFF</p>
                 </div>}
                 {!destination.isOffer && <img className="imgMinCard" src={destination.img}/>}
-                <Link to="/destination"><btn class="btnMinCard" style={{marginTop:"10px"}}>Details</btn></Link>
+                <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"10px"}}>Details</btn></Link>
             </div>
         );
     });

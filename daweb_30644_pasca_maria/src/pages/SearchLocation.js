@@ -10,7 +10,7 @@ export default function SearchLocation(){
     const[location, setLocation] = useState(existingLocations[0]);
 
     return(
-        <div style={{display: "inline-flex",  overflow: "hidden"}}>
+        <div style={{display: "inline-flex"}}>
             <div style={{display:"block", width:"80%", marginTop:"-3%"}}>
                 <h1 class="h1Title" style={{marginBottom:"-3%"}}>Where next?</h1>
                 <hr class="titleLine" style={{marginBottom:"-5%"}}/>

@@ -9,6 +9,7 @@ export default function Homepage(){
     localStorage.setItem("startDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
     localStorage.setItem("endDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
     localStorage.setItem("showOffers", false);
+    localStorage.setItem("id", null);
 
     var mock1 ={
         id: 1,
@@ -53,16 +54,14 @@ export default function Homepage(){
       localStorage.setItem("mocks", JSON.stringify(mocks));
 
     return(
-    <div>
-        <div style={{display: "inline-flex",  overflow: "hidden"}}>
-            <div style={{width:"80%", marginTop: "5%"}}>
-                <h1 class="h1Title">Where next?</h1>
-                <hr class="titleLine"/>
-                <h2 class="h2Title">Find your next destination</h2>
-                <Link to="/search"><btn class="btnTitle" style={{marginBottom:"10%"}}>Search here</btn></Link>
-            </div>
-            <img class="bgImage" src="seattle.jpg"/>
-        </div>
-    </div>
+          <div style={{display: "inline-flex", padding:"0px", margin:"0px"}}>
+              <div style={{width:"80%", marginTop: "5%"}}>
+                  <h1 class="h1Title">Where next?</h1>
+                  <hr class="titleLine"/>
+                  <h2 class="h2Title">Find your next destination</h2>
+                  <Link to="/search"><btn class="btnTitle" style={{marginBottom:"10%"}}>Search here</btn></Link>
+              </div>
+              <img class="bgImage" src="seattle.jpg" style={{marginLeft:"30px"}}/>
+          </div>
     );
 }

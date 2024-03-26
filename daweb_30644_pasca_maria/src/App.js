@@ -14,7 +14,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div style={{padding:"0px", margin:"0px"}}>
       <div class="dropdown">
         <button class="logo"/>
         <div class="dropdown-content">
@@ -41,7 +41,7 @@ export default function App() {
           <Route path="/search_location" element={<SearchLocation/>}/>
           <Route path="/search_date" element={<SearchDate/>}/>
           <Route path="/search_people" element={<SearchPeople/>}/>
-          <Route path="/destination" element={<Destination/>}/>
+          <Route path={`/destination/:id`} element={<Destination/>}/>
         </Routes>
       </BrowserRouter>
     </div>
