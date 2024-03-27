@@ -47,7 +47,7 @@ export default function SearchPeople(){
                 <input class="btnTitle" placeholder="Type here" style={{marginBottom:"5%", paddingRight:"0px", width:"70px", height:"30px"}}
                     id="txtAdults" value={adults} onChange={(e) => handleChangeAdults(e.target.value)} type="number"/>
 
-                {(id === null || (id !== null && JSON.parse(localStorage.getItem("mocks"))[id].childFriendly)) &&
+                {(id === null || (id !== null && JSON.parse(localStorage.getItem("mocks"))[id-1].childFriendly)) &&
                 <div>
                     <h2 class="h2Title" style={{marginBottom:"1%"}}>How many children are going?</h2>
                     <input class="btnTitle" placeholder="Type here" style={{marginBottom:"10%", paddingRight:"0px", width:"70px", height:"30px"}}

@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 
 export default function Homepage(){
     localStorage.setItem("chosenLocation", null);
-    localStorage.setItem("adults", "0");
-    localStorage.setItem("children", "0");
+    localStorage.setItem("adults", 0);
+    localStorage.setItem("children", 0);
     localStorage.setItem("startDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
     localStorage.setItem("endDate", JSON.stringify(dayjs().format('YYYY-MM-DD')));
     localStorage.setItem("showOffers", false);

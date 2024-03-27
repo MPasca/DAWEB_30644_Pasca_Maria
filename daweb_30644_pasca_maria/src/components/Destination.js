@@ -8,7 +8,7 @@ export default function Destination(){
 
     var numberAdults = JSON.parse(localStorage.getItem("adults"));
     var numberChildren = JSON.parse(localStorage.getItem("children"));
-    var noPeople = numberAdults + numberChildren;
+    var noPeople = parseInt(numberAdults) + parseInt(numberChildren);
 
     const handleReserveBtn = (reservedSeats) => {
         existingDestinations[id].noSeats -= reservedSeats;
