@@ -45,8 +45,8 @@ export default function Homepage(){
         price: 400,
         childFriendly: false,
         img: "seattle.jpg",
-        startDate: new Date("2024-04-09"),
-        endDate: new Date("2024-04-13"),
+        startDate: new Date("2024-05-09"),
+        endDate: new Date("2024-06-13"),
         isOffer: false
       };
     

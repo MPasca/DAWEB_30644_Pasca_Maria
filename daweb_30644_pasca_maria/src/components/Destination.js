@@ -30,9 +30,9 @@ export default function Destination(){
                     <p class="txtMaxCard">{destination.description}</p>
                     <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>{noDays + " days: "} 
                         {startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate()}.
-                        {startDate.getMonth() < 10 ? "0" + startDate.getMonth() : startDate.getMonth()} - {" "}
+                        {startDate.getMonth() < 10 ? "0" + parseInt(startDate.getMonth()+1) : parseInt(startDate.getMonth()+1)} - {" "}
                         {endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate()}.
-                        {endDate.getMonth() < 10 ? "0" + endDate.getMonth() : endDate.getMonth()}
+                        {endDate.getMonth() < 10 ? "0" + parseInt(endDate.getMonth()+1) : parseInt(endDate.getMonth()+1)}
                     </p>
                     <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>Seats available: {destination.noSeats}</p>
                     <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>Price per day: {destination.isOffer ? destination.price * 0.9 : destination.price}€ / {noDays} days</p>
@@ -45,9 +45,9 @@ export default function Destination(){
                                 <h1 className="lblPopup">Succes!</h1>
                                 <h2 className="txtPopup">Your reservation for {destination.location} {" ("}
                                 {startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate()}.
-                                {startDate.getMonth() < 10 ? "0" + startDate.getMonth() : startDate.getMonth()} - {" "}
+                                {startDate.getMonth() < 10 ? "0" + parseInt(startDate.getMonth()+1) : parseInt(startDate.getMonth()+1)} - {" "}
                                 {endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate()}.
-                                {endDate.getMonth() < 10 ? "0" + endDate.getMonth() + ") " : endDate.getMonth() + ") "}
+                                {endDate.getMonth() < 10 ? "0" + parseInt(endDate.getMonth()+1) + ") " : parseInt(endDate.getMonth()+1) + ") "}
                                 for {noPeople} people has been confirmed! </h2>
                                 <Link to="/"><button className="btnPopup">Go back</button></Link>
                             </div>
