@@ -7,6 +7,9 @@ import Destination from './components/Destination';
 import SearchLocation from './pages/SearchLocation';
 import SearchDate from './pages/SearchDate';
 import SearchPeople from './pages/SearchPeople';
+import AgentDashboard from './pages/AgentDashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 export default function App() {
   const handleOfferClick = () => {
@@ -18,7 +21,7 @@ export default function App() {
       <div class="dropdown">
         <button class="logo"/>
         <div class="dropdown-content">
-          <a href="/home">Login</a>
+          <a href="/login">Login</a>
           <a href="/home">Home</a>          
           <a href="/search">Search</a>
           <div class="subnav">
@@ -35,6 +38,8 @@ export default function App() {
         <Routes>
           <Route index element ={<Homepage/>}/>
           <Route path="/home" element ={<Homepage/>}/>
+          <Route path="/login" element = {<Login/>}/>
+          <Route path="/register" element = {<Register/>}/>
           <Route path="/contact" element = {<Contact/>}/>
           <Route path="/destinations" element = {<Destinations/>}/>
           <Route path="/search" element={<SearchLocation/>}/>
@@ -42,6 +47,7 @@ export default function App() {
           <Route path="/search_date" element={<SearchDate/>}/>
           <Route path="/search_people" element={<SearchPeople/>}/>
           <Route path={`/destination/:id`} element={<Destination/>}/>
+          <Route path={`/agentdashboard/:id`} element={<AgentDashboard/>}/>
         </Routes>
       </BrowserRouter>
     </div>
