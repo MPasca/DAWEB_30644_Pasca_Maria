@@ -21,7 +21,7 @@ export default function Homepage(){
         img: "aveiro.png",
         startDate: new Date("2024-04-09"),
         endDate: new Date("2024-04-13"),
-        isOffer: true
+        offer: 10
       };
     
       var mock2 = {
@@ -34,7 +34,7 @@ export default function Homepage(){
         img: "berlin.png",
         startDate: new Date("2024-04-09"),
         endDate: new Date("2024-04-13"),
-        isOffer: true
+        offer: 20
       };
     
       var mock3 = {
@@ -47,7 +47,7 @@ export default function Homepage(){
         img: "seattle.jpg",
         startDate: new Date("2024-05-09"),
         endDate: new Date("2024-06-13"),
-        isOffer: false
+        offer: 0
       };
     
       var mocks = [mock1, mock2, mock3]
