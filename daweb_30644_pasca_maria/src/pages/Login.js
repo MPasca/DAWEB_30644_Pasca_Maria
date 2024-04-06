@@ -12,10 +12,11 @@ export default function Login (){
         console.log(credentials);
         // send to backend for confirmation
         const role = "agent"
-        const id = 1;
-
+        const id = 0;
+        sessionStorage.setItem("id", id);
+        sessionStorage.setItem("email", email);
         if(role == "agent") {
-            window.location.href = `http://localhost:3000/agentdashboard/${id}`;
+            window.location.href = `http://localhost:3000/agentdashboard`;
         }
     }
 

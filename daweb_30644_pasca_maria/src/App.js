@@ -47,7 +47,7 @@ export default function App() {
           <Route path="/search_date" element={<SearchDate/>}/>
           <Route path="/search_people" element={<SearchPeople/>}/>
           <Route path={`/destination/:id`} element={<Destination/>}/>
-          <Route path={`/agentdashboard/:id`} element={<AgentDashboard/>}/>
+          <Route path={`/agentdashboard`} element={<AgentDashboard/>}/>
         </Routes>
       </BrowserRouter>
     </div>
