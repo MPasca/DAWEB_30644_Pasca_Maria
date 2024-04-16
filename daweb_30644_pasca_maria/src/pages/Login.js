@@ -14,7 +14,7 @@ export default function Login (){
         const role = "agent"
         const id = 0;
         sessionStorage.setItem("id", id);
-        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("role", role);
         if(role == "agent") {
             window.location.href = `http://localhost:3000/agentdashboard`;
         }
