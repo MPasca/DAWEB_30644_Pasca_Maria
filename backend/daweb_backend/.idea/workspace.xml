@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a27b9c80-7191-4900-85dd-37c7df559604" name="Changes" comment="backend: created the python project">
+      <change afterPath="$PROJECT_DIR$/api/migrations/0002_testmodel_delete_offer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/migrations/0003_testmodel_created_at_alter_testmodel_id.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/destinations/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/destinations/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jsons/create_destination.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/daweb_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/daweb_backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/daweb_backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/daweb_backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/migrations/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations_api/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/migrations/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_api/views.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2fCBrpSQjkYjv7dUYrBpNmHJL1A" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Django Server.daweb_backend.executor": "Run",
+    "Python.manage.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "git-widget-placeholder": "dev",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\maria\OneDrive\Desktop\Faculta\DAW\daweb_30644_pasca_maria_1\backend\daweb_backend\test_api" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.daweb_backend">
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="daweb_backend" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="daweb_backend" type="Python.DjangoServer" factoryName="Django server">
+      <module name="daweb_backend" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="daweb_backend.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.manage" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-09665e90c3a7-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.15026.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a27b9c80-7191-4900-85dd-37c7df559604" name="Changes" comment="" />
+      <created>1713295381605</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713295381605</updated>
+      <workItem from="1713295394138" duration="4153000" />
+      <workItem from="1713341431604" duration="6183000" />
+      <workItem from="1713431677740" duration="440000" />
+      <workItem from="1713631128948" duration="2899000" />
+    </task>
+    <task id="LOCAL-00001" summary="backend: created the python project">
+      <option name="closed" value="true" />
+      <created>1713300599001</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713300599001</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="backend: created the python project" />
+    <option name="LAST_COMMIT_MESSAGE" value="backend: created the python project" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/daweb_backend$manage.coverage" NAME="manage Coverage Results" MODIFIED="1713636246016" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
