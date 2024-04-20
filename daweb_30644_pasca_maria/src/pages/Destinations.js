@@ -57,14 +57,14 @@ export default function Destinations(){
     const showDestinations = destinations.map((destination) => {
         console.log(JSON.parse(destination.id));
         return(
-            (!showOffers || (showOffers && destination.isOffer)) &&
+            (!showOffers || (showOffers && destination.offer != 0)) &&
             <div class="divMinCard">
                 <p class="lblMinCard">{destination.location}</p>
-                {destination.isOffer && <div>
+                {destination.offer != 0 && <div>
                     <img className="imgMinCard" src={destination.img} style={{marginBottom:"0px"}}/>
                  <p class="lblMinCard" style={{marginTop:"5px", padding:"0px"}}>SPECIAL OFFER: 10% OFF</p>
                 </div>}
-                {!destination.isOffer && <img className="imgMinCard" src={destination.img}/>}
+                {destination.offer == 0 && <img className="imgMinCard" src={destination.img}/>}
                 <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"10px"}}>Details</btn></Link>
             </div>
         );
