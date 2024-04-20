@@ -45,6 +45,23 @@ def delete_user(request, pk):
     return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+def login_user(request):
+    user = User.objects.get(email=request.data.get('email'), password=request.data.get('password'))
+    if user is not None:
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"message":"incorrect login information"}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET'])
+def get_user_by_id(request, pk):
+    user = User.objects.get(id=pk)
+    if user is not None:
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"message":"incorrect id"}, status=status.HTTP_404_NOT_FOUND)
+
 # destination actions
 
 
@@ -55,12 +72,22 @@ def get_destinations(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_destination_by_id(request, pk):
+    destination = Destination.objects.get(id=pk)
+    if destination is not None:
+        serializer = DestinationSerializer(destination)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"message":"incorrect id"}, status=status.HTTP_404_NOT_FOUND)
+
+
 @api_view(['POST'])
 def create_destination(request):
     serializer = DestinationSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+
 
 @api_view(['PUT'])
 def update_destination(request, pk):

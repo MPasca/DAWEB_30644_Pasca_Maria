@@ -1,12 +1,5 @@
 {
-    "username": "testusername",
-    "password": "pass123",
-    "email": "email2@test.com"
-}
-
-{
-    "id": "3",
-    "username": "jane_doe",
+    "username": "jane-doe",
     "password": "pass123",
     "email": "email@test.com"
 }
