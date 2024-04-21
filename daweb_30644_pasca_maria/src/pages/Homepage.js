@@ -18,7 +18,7 @@ export default function Homepage(){
         noSeats: 30,
         price: 120,
         childFriendly: true,
-        img: "aveiro.png",
+        img: "https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/27/64/b9.jpg",
         startDate: new Date("2024-04-09"),
         endDate: new Date("2024-04-13"),
         offer: 10
@@ -50,9 +50,7 @@ export default function Homepage(){
         offer: 0
       };
     
-      var mocks = [mock1, mock2, mock3]
-      localStorage.setItem("mocks", JSON.stringify(mocks));
-
+      
     return(
           <div style={{display: "inline-flex", padding:"0px", margin:"0px"}}>
               <div style={{width:"80%", marginTop: "5%"}}>

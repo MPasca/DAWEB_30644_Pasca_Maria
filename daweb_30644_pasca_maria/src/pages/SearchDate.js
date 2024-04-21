@@ -17,8 +17,8 @@ export default function SearchDate(){
     };
 
     const handleClick = () => {
-        localStorage.setItem("startDate", JSON.stringify(date.startDate).split('T')[0]+"\"");
-        localStorage.setItem("endDate", JSON.stringify(date.endDate).split('T')[0]+"\"");
+        sessionStorage.setItem("startDate", JSON.stringify(date.startDate).split('T')[0]+"\"");
+        sessionStorage.setItem("endDate", JSON.stringify(date.endDate).split('T')[0]+"\"");
     }
 
     return(

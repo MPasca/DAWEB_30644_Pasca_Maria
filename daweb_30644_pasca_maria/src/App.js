@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, json} from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Contact from './pages/Contact';
 import Destinations from './pages/Destinations';
@@ -12,9 +12,26 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import UpdateDestination from "./components/UpdateDestination";
 import AddDestination from './components/AddDestination';
+import { useEffect, useState } from 'react';
 
 
 export default function App() {
+  const [existingDestinations, setExistingDestinations] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:8000/destinations', {
+        method: 'GET',
+        mode: 'cors',
+        headers:{"Content-Type":"application/json"}
+    }).then(response => response.json())
+        .then(data => {
+            setExistingDestinations(data);
+        });
+}, [])
+
+  useEffect(() => {
+    sessionStorage.setItem("existingDestinations", JSON.stringify(existingDestinations));
+  }, [existingDestinations])
+
   const handleOfferClick = () => {
     localStorage.setItem("showOffers", true);
   }

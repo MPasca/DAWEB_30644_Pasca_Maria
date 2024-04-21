@@ -27,14 +27,14 @@ export default function SearchPeople(){
 
     const handleClick = () => {
         if(ValidatePeople(adults, children)){
-            localStorage.setItem("adults", JSON.stringify(adults));
-            localStorage.setItem("children", JSON.stringify(children));    
+            sessionStorage.setItem("adults", JSON.stringify(adults));
+            sessionStorage.setItem("children", JSON.stringify(children));    
         }
         else{
             throw Error("Inadequate number of goers:");
         }
-        localStorage.setItem("adults", JSON.stringify(adults));
-        localStorage.setItem("children", JSON.stringify(children));    
+        sessionStorage.setItem("adults", JSON.stringify(adults));
+        sessionStorage.setItem("children", JSON.stringify(children));    
     } 
 
     return(

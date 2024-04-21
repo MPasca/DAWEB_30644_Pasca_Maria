@@ -10,14 +10,14 @@ import { createFilterOptions } from "@mui/material";
 
 export default function Destinations(){
 
-    var chosenLocation = localStorage.getItem("chosenLocation");
-    var numberAdults = JSON.parse(localStorage.getItem("adults"));
-    var numberChildren = JSON.parse(localStorage.getItem("children"));
-    var storageStartDate = JSON.parse(localStorage.getItem("startDate"));
-    var storageEndDate = JSON.parse(localStorage.getItem("endDate"));
+    var chosenLocation = sessionStorage.getItem("chosenLocation");
+    var numberAdults = JSON.parse(sessionStorage.getItem("adults"));
+    var numberChildren = JSON.parse(sessionStorage.getItem("children"));
+    var storageStartDate = JSON.parse(sessionStorage.getItem("startDate"));
+    var storageEndDate = JSON.parse(sessionStorage.getItem("endDate"));
 
-    var onlyOffers = JSON.parse(localStorage.getItem("showOffers"));
-    var existingDestinations = JSON.parse(localStorage.getItem("mocks"));
+    var onlyOffers = JSON.parse(sessionStorage.getItem("showOffers"));
+    var existingDestinations = JSON.parse(sessionStorage.getItem("existingDestinations"));
 
     const [startDate, setStartDate] = React.useState(storageStartDate);
     const [endDate, setEndDate] = React.useState(storageEndDate);
@@ -34,28 +34,30 @@ export default function Destinations(){
 
     const filterResult = () => {
         var result = existingDestinations;
-
-        if(chosenLocation !== 'null'){
+        if(chosenLocation){
             result = result.filter((destination) => destination.location === chosenLocation);
         } 
 
-        if(startDate !== null && endDate !== null && startDate !== endDate){
+        if(startDate && endDate && startDate !== endDate){
             result = result.filter((destination) => destination.startDate >= startDate);
-            result = result.filter((destination) => destination.endDate <= endDate);    
+            result = result.filter((destination) => destination.endDate <= endDate); 
         }
         if(numberChildren > 0){
             result = result.filter((destination) => destination.childFriendly === true);
         }
 
-        result = result.filter((destination) => numberChildren + numberAdults < destination.noSeats);
+        if(numberAdults || numberChildren)
+        {
+            result = result.filter((destination) => numberChildren + numberAdults < destination.noSeats);
+        }
 
+        console.log(result);
         return result;
     }
 
     const [destinations, setDestinations] = useState(filterResult());
 
     const showDestinations = destinations.map((destination) => {
-        console.log(JSON.parse(destination.id));
         return(
             (!showOffers || (showOffers && destination.offer != 0)) &&
             <div class="divMinCard">
@@ -71,16 +73,12 @@ export default function Destinations(){
     });
 
     const handleFilterClick = () => {
-        console.log("in filter");
         if(startDatePicker <= endDatePicker) {
-            console.log("start date < end date")
             if(startDatePicker >= dayjs()) {
                 setStartDate(startDatePicker);
                 setEndDate(endDatePicker);
                 localStorage.setItem("startDate", JSON.stringify(startDatePicker));
                 localStorage.setItem("endDate", JSON.stringify(endDatePicker));
-                console.log(startDatePicker + " " + startDate);
-                console.log(endDatePicker + " " + endDate);
                 window.location.reload();
             }
         }
