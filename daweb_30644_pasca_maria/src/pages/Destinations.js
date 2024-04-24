@@ -27,9 +27,9 @@ export default function Destinations(){
             mode: 'cors',
             headers:{"Content-Type":"application/json"}
         }).then(response => response.json())
-            .then(data => {
-                setExistingDestinations(data);
-            });
+            .then(data => { setExistingDestinations(data); })
+            .catch((error) => console.error('Error fetching data:', error));
+
     }, [])
 
     const [startDate, setStartDate] = React.useState(storageStartDate);

@@ -6,18 +6,21 @@ export default function SearchPeople(){
     const [adults, setAdults] = useState(0);
     const [children, setChildren] = useState(0);
     var destinationId = JSON.parse(sessionStorage.getItem("destinationId"));
+    console.log(destinationId);
 
     const [destination, setDestination] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/destinations/${destinationId}`, {
-            method: 'GET',
-            mode: 'cors',
-            headers:{"Content-Type":"application/json"}
-        }).then(response => response.json())
-            .then(data => {
-                setDestination(data);
-            });
+        if(destinationId) {
+            fetch(`http://localhost:8000/destinations/${destinationId}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers:{"Content-Type":"application/json"}
+            }).then(response => response.json())
+                .then(data => { setDestination(data); })
+                .catch((error) => console.error('Error fetching data:', error));
+    
+            }
     }, [destinationId])
 
 
@@ -41,14 +44,12 @@ export default function SearchPeople(){
 
     const handleClick = () => {
         if(ValidatePeople(adults, children)){
-            sessionStorage.setItem("adults", adults);
-            sessionStorage.setItem("children", children); 
+            sessionStorage.setItem("adults", parseInt(adults));
+            sessionStorage.setItem("children", parseInt(children)); 
         }
         else{
-            throw Error("Inadequate number of goers:");
+            window.location.reload();
         }
-        sessionStorage.setItem("adults", adults);
-        sessionStorage.setItem("children", children);    
     } 
 
     return(
@@ -59,7 +60,7 @@ export default function SearchPeople(){
             <div style={{width:"80%", marginTop: "5%"}}>
                 <h2 class="h2Title" style={{marginBottom:"1%"}}>How many adults are going?</h2>
                 <input class="btnTitle" placeholder="Type here" style={{marginBottom:"5%", paddingRight:"0px", width:"70px", height:"30px"}}
-                   value={adults} onChange={(e) => setAdults(e.target.value)} type="number"/>
+                   value={adults} onChange={(e) => handleChangeAdults(e.target.value)} type="number"/>
 
                 {(!destinationId || (destinationId  && destination && destination.isChildFriendly)) &&
                     <div>

@@ -16,17 +16,34 @@ import { useEffect, useState } from 'react';
 
 
 export default function App() {
+  const [userLocation, setUserLocation] = useState();
+
+  const getUserLocation = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation({latitude, longitude});
+      }, (error) => console.error('Error getting user location: ', error));
+    }
+    else {
+      console.error("Geolocation not supported on this browser");
+    }
+  }
+
+  useEffect(() => {
+    userLocation && sessionStorage.setItem("userLocation", JSON.stringify(userLocation));
+  }, [userLocation])
+
   const [existingDestinations, setExistingDestinations] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8000/destinations', {
+      fetch('http://localhost:8000/destinations', {
         method: 'GET',
         mode: 'cors',
         headers:{"Content-Type":"application/json"}
     }).then(response => response.json())
-        .then(data => {
-            setExistingDestinations(data);
-        });
-}, [])
+      .then(data => { setExistingDestinations(data); })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, [])
 
   useEffect(() => {
     sessionStorage.setItem("existingDestinations", JSON.stringify(existingDestinations));
@@ -44,6 +61,7 @@ export default function App() {
   var role = sessionStorage.getItem("role")
   return (
     <div style={{padding:"0px", margin:"0px"}}>
+      {getUserLocation()}
       <div class="dropdown">
         <button class="logo"/>
         <div class="dropdown-content">

@@ -19,7 +19,9 @@ export default function Register () {
                 mode: 'cors',
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify(credentials)
-            }).then(response => response.json());
+            }).then(response => response.json())
+            .catch((error) => console.error('Error registering user:', error));
+
     
             window.location.href = `http://localhost:3000`;
 

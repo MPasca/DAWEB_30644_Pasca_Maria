@@ -36,7 +36,8 @@ export default function Login (){
                 sessionStorage.setItem("userId", id);
                 sessionStorage.setItem("role", "client");
                 window.location.href = `http://localhost:3000/`;
-            });
+            })
+            .catch((error) => console.error('Error when trying to log in:', error));
 
         if(role == "agent") {
         }

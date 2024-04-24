@@ -15,9 +15,9 @@ export default function UpdateDestination () {
             mode: 'cors',
             headers:{"Content-Type":"application/json"}
         }).then(response => response.json())
-            .then(data => {
-                setDestinationToUpdate(data);
-            });
+            .then(data => { setDestinationToUpdate(data); })
+            .catch((error) => console.error('Error fetching data:', error));
+
     }, [])
 
     
@@ -59,9 +59,11 @@ export default function UpdateDestination () {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(updatedData)
         }).then(response => response.json())
-        .then(data => {console.log("destination updated: " + data.id);
+        .then(data => { console.log("destination updated: " + data.id);
             // window.location.href = `http://localhost:3000/agentdashboard`;
-        });
+        })
+        .catch((error) => console.error('Error fetching data:', error));
+
 
     }
 

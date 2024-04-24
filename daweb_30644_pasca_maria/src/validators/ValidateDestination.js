@@ -2,28 +2,44 @@ import dayjs from "dayjs";
 
 export default function ValidateDestination(destination) {
     if(destination.location == null){
-        throw Error("No destination specified");
+        console.error("No destination specified");
+        return false;
     }
+
     if(destination.price <= 0){
-        throw Error("Incorrect price");
+        console.error("Incorrect price");
+        return false;
     }
+
     if(destination.offer < 0){
-        throw Error("Incorrect offer");
+        console.error("Incorrect offer");
+        return false;
     }
+
     if(destination.noSeats <= 0){
-        throw Error("Incorrect number of seats");
+        console.error("Incorrect number of seats");
+        return false;
     }
+
     if(destination.description == null){
-        throw Error("No description provided");
+        console.error("No description provided");
+        return false;
     }
+
     if(destination.img == null){
-        throw Error("No image provided");
+        console.error("No image provided");
+        return false;
     }
+
     if(destination.startDate < dayjs()){
-        throw Error("Incorrect start date");
+        console.error("Incorrect start date");
+        return false;
     }
+    
     if(destination.startDate >= destination.endDate){
-        throw Error("Incorrect date range");
+        console.error("Incorrect date range");
+        return false;
     }
+
     return true;
 }

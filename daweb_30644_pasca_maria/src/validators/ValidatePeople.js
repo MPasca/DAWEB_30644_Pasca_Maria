@@ -1,24 +1,22 @@
 export default function ValidatePeople (noAdults, noChildren){
     if(noAdults < 0 || noChildren < 0){
-        console.log("number of adults: " + noAdults);
-        console.log("number of children: " + noChildren);
-        throw Error("Number of goers cannot be negative");
+        console.error("Number of goers cannot be negative");
+        return false;
     }
     if(noAdults === 0 && noChildren !== 0){
-        console.log("number of adults: " + noAdults);
-        console.log("number of children: " + noChildren);
-        throw Error("No number of adults specified")
+        console.error("No number of adults specified");
+        return false;
     }
+    
     var sum = parseInt(noAdults) + parseInt(noChildren);
     if(sum > 8){
-        console.log("number of adults: " + noAdults);
-        console.log("number of children: " + noChildren);
-        throw Error("Too many people");
+        console.error("Too many people");
+        return false;
     }
+
     if(noChildren/noAdults > 3){
-        console.log("number of adults: " + noAdults);
-        console.log("number of children: " + noChildren);
-        throw Error("An adult should look over maximum 3 children");
+        console.error("An adult should look over maximum 3 children");
+        return false;
     }
 
     return true;

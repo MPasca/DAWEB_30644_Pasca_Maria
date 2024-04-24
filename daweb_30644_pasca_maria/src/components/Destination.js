@@ -15,9 +15,9 @@ export default function Destination(){
             mode: 'cors',
             headers:{"Content-Type":"application/json"}
         }).then(response => response.json())
-            .then(data => {
-                setDestination(data);
-            });
+            .then(data => { setDestination(data); })
+            .catch((error) => console.error('Error fetching data:', error));
+
     }, [])
 
     var numberAdults = JSON.parse(sessionStorage.getItem("adults"));
@@ -55,7 +55,9 @@ export default function Destination(){
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({"numberOfSeats": (destination.numberOfSeats - noPeople)})
         }).then(response => response.json())
-        .then(data => {console.log("number of seats updated: "); console.log(data.numberOfSeats);});
+        .then(data => {console.log("number of seats updated: "); console.log(data.numberOfSeats);})
+        .catch((error) => console.error('Error fetching data:', error));
+
         setSeePopup(true);
     }
 

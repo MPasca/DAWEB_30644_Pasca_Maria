@@ -15,9 +15,9 @@ export default function Dashboard () {
             mode: 'cors',
             headers:{"Content-Type":"application/json"}
         }).then(response => response.json())
-            .then(data => {
-                setExistingDestinations(data);
-            });
+        .then(data => { setExistingDestinations(data); })
+        .catch((error) => console.error('Error fetching data:', error));
+
     }, [])
 
     const [updateId, setDestinationToUpdate] = useState();
@@ -36,9 +36,9 @@ export default function Dashboard () {
                 mode: 'cors',
                 headers:{"Content-Type":"application/json"}
             }).then(response => response.json())
-                .then(data => {
-                    console.log("deleted element with id: " + deleteId)
-                });
+                .then(data => { console.log("deleted element with id: " + deleteId) })
+                .catch((error) => console.error('Error deleting destination:', error));
+
         }
         else {
             fetch(`http://localhost:8000/destinations/delete/${existingDestinations[0].id}`, {
@@ -46,9 +46,9 @@ export default function Dashboard () {
                 mode: 'cors',
                 headers:{"Content-Type":"application/json"}
             }).then(response => response.json())
-                .then(data => {
-                    console.log("deleted element with id: " + deleteId)
-                });
+                .then(data => { console.log("deleted element with id: " + deleteId) })
+                .catch((error) => console.error('Error deleting destination:', error));
+
         }
         setDestinationToDelete();
     }
