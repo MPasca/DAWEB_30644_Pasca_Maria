@@ -18,7 +18,19 @@ export default function Destinations(){
     var storageEndDate = JSON.parse(sessionStorage.getItem("endDate"));
 
     var onlyOffers = JSON.parse(sessionStorage.getItem("showOffers"));
-    var existingDestinations = JSON.parse(sessionStorage.getItem("existingDestinations"));
+
+    const [existingDestinations, setExistingDestinations] = useState();
+
+    useEffect(() => {
+        fetch('http://localhost:8000/destinations', {
+            method: 'GET',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"}
+        }).then(response => response.json())
+            .then(data => {
+                setExistingDestinations(data);
+            });
+    }, [])
 
     const [startDate, setStartDate] = React.useState(storageStartDate);
     const [endDate, setEndDate] = React.useState(storageEndDate);
@@ -56,9 +68,15 @@ export default function Destinations(){
         return result;
     }
 
-    const [destinations, setDestinations] = useState(filterResult());
+    const [destinations, setDestinations] = useState();
+    useEffect(() => {
+        if(existingDestinations) {
+            setDestinations(filterResult());
+        }
+    }, [existingDestinations])
 
-    const showDestinations = destinations.map((destination) => {
+
+    const showDestinations = destinations && destinations.map((destination) => {
         return(
             (!showOffers || (showOffers && destination.offer != 0)) &&
             <div class="divMinCard">
@@ -116,7 +134,7 @@ export default function Destinations(){
             <h1 class="h1Title">Destinations for you</h1>
             <hr class="titleLine" style={{marginBottom:"50px", width:"auto", marginRight:"30%"}}></hr>
             <div class="gridDestinations">
-                {showDestinations}
+                {existingDestinations && showDestinations}
             </div>
             <Link to="/home"><button class="btnNav" style={{marginTop:"5%", width:"auto", marginLeft: "0%", marginBottom:"5%"}}>Home</button></Link>
         </div>

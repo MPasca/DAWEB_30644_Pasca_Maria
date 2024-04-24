@@ -73,15 +73,15 @@ export default function Destination(){
                     <img className="imgMaxCard" src={destination.image}/>
                     <div>
                         <p class="txtMaxCard">{destination.description}</p>
-                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%"}}>{getNoDays(destination.startDate, destination.endDate) + " days: "} 
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%"}}>{getNoDays(destination.startDate, destination.endDate) + " days: "} 
                             {getDate(destination.startDate) < 10 ? "0" + getDate(destination.startDate) : getDate(destination.startDate)}.
                             {getMonth(destination.startDate) < 10 ? "0" + parseInt(getMonth(destination.startDate)+1) : parseInt(getMonth(destination.startDate)+1)} - {" "}
                             {getDate(destination.endDate) < 10 ? "0" + getDate(destination.endDate) : getDate(destination.endDate)}.
                             {getMonth(destination.endDate) < 10 ? "0" + parseInt(getMonth(destination.endDate)+1) : parseInt(getMonth(destination.endDate)+1)}
                         </p>
-                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%", marginTop:"-20px"}}>Seats available: {destination.numberOfSeats}</p>
-                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%", marginTop:"-20px"}}>Price per night: {destination.price * (100 - destination.offer)/100}€ / night</p>
-                        <p class="txtMaxCard" style={{fontSize:"24px", marginLeft:"30%", marginTop: "-20px", fontWeight:"500", color:"red"}}>BEFORE DISCOUNT: {destination.price}€ / night</p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%", marginTop:"-20px"}}>Seats available: {destination.numberOfSeats}</p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%", marginTop:"-20px"}}>Price per night: {destination.price * (100 - destination.offer)/100}€ / night</p>
+                        <p class="txtMaxCard" style={{fontSize:"24px", marginLeft:"25%", marginTop: "-20px", fontWeight:"500", color:"red"}}>BEFORE DISCOUNT: {destination.price}€ / night</p>
                         <p class="txtMaxCard" style={{fontSize:"42px", marginLeft:"10px", marginTop:"0px", fontWeight: "650"}}>
                             Total price: {(destination.price * (100 - destination.offer)/100) * getNoDays(destination.startDate, destination.endDate)}€ /  
                             {getNoDays(destination.startDate, destination.endDate)} nights</p>
