@@ -9,15 +9,21 @@ export default function Register () {
 
     const handleClick = (e) => {
         e.preventDefault()
-        const role = "client";
         if(password != confirmPassword){
             console.log("passwords don't match");
         }
         else{
-            const credentials = {email, password, role};
-            console.log(credentials);
+            const credentials = {email, password};
+            fetch('http://localhost:8000/users/create', {
+                method: 'POST',
+                mode: 'cors',
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify(credentials)
+            }).then(response => response.json());
+    
+            window.location.href = `http://localhost:3000`;
+
         }
-        // send to backend for confirmation
     }
 
 
@@ -26,7 +32,7 @@ export default function Register () {
             <div style={{width:"80%", marginTop: "5%"}}>
                 <h1 class="h1Title">Register</h1>
                 <hr class="titleLine"/>
-                <div style={{backgroundColor:"#D9D9D9", display:"inline-flex", marginTop:"5%", padding:"2%", paddingBottom: "5%", border: "1px solid black", borderRadius: "10%", marginBottom:"5%"}}>
+                <div style={{backgroundColor:"#D9D9D9", display:"inline-flex", marginTop:"5%", padding:"2%", paddingBottom: "5%", border: "1px solid black", borderRadius: "25px", marginBottom:"5%"}}>
                     <TextField required
                         id="idEmail"
                         label="Email"

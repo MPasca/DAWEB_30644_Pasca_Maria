@@ -1,67 +1,112 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Popup from 'reactjs-popup';
 
 export default function Destination(){
     var id = useParams().id;
-    var existingDestinations = JSON.parse(localStorage.getItem("mocks"));
-    localStorage.setItem("id", id);
+    var existingDestinations = JSON.parse(sessionStorage.getItem("existingDestinations"));
+    sessionStorage.setItem("destinationId", id);
 
-    var numberAdults = JSON.parse(localStorage.getItem("adults"));
-    var numberChildren = JSON.parse(localStorage.getItem("children"));
+    const [destination, setDestination] = useState();
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/destinations/${id}`, {
+            method: 'GET',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"}
+        }).then(response => response.json())
+            .then(data => {
+                setDestination(data);
+            });
+    }, [])
+
+    var numberAdults = JSON.parse(sessionStorage.getItem("adults"));
+    var numberChildren = JSON.parse(sessionStorage.getItem("children"));
     var noPeople = parseInt(numberAdults) + parseInt(numberChildren);
 
-    const handleReserveBtn = (reservedSeats) => {
-        existingDestinations[id].noSeats -= reservedSeats;
+    const getDate = (date) => {
+        var newDate = new Date(date);
+        return newDate.getDate();
     }
 
-    const showDestination = existingDestinations.filter((destination) => destination.id == id).map((destination)=>{
-        var startDate = new Date(destination.startDate);
-        var endDate = new Date(destination.endDate);
-        var noDays = (endDate - startDate);
+    const getMonth = (date) => {
+        var newDate = new Date(date);
+        return newDate.getMonth();
+    }
+
+    const getYear = (date) => {
+        var newDate = new Date(date);
+        return newDate.getYear();
+    }
+
+    const getNoDays = (startDate, endDate) => {
+        var noDays = new Date(endDate) - new Date(startDate);
         noDays = Math.round(noDays/(1000 * 3600 * 24));
-    
-        return(
-        <div class="divMaxCard">
-            <p class="lblMaxCard">{destination.location} {destination.isOffer ? " - 10% OFF" : " "}</p>
-            <hr style={{border:"1px solid black", width:"60%", marginLeft:"3%"}}></hr>
-            <div style={{display:"inline-flex", marginBottom:"-20px"}}>
-                <img className="imgMaxCard" src={"/"+destination.img}/>
-                <div>
-                    <p class="txtMaxCard">{destination.description}</p>
-                    <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>{noDays + " days: "} 
-                        {startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate()}.
-                        {startDate.getMonth() < 10 ? "0" + parseInt(startDate.getMonth()+1) : parseInt(startDate.getMonth()+1)} - {" "}
-                        {endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate()}.
-                        {endDate.getMonth() < 10 ? "0" + parseInt(endDate.getMonth()+1) : parseInt(endDate.getMonth()+1)}
-                    </p>
-                    <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>Seats available: {destination.noSeats}</p>
-                    <p class="txtMaxCard" style={{fontSize:"38px", marginLeft:"35%"}}>Price per day: {destination.isOffer ? destination.price * 0.9 : destination.price}€ / {noDays} days</p>
-                </div>
-            </div>
-            <div style={{marginTop:"-10px"}}>
-                {(noPeople > 0) && 
-                    <Popup trigger={<button class="btnMaxCard" onClick={() => handleReserveBtn = (noPeople)}>Reserve</button>}>
-                            <div className="popupReserved">
-                                <h1 className="lblPopup">Succes!</h1>
-                                <h2 className="txtPopup">Your reservation for {destination.location} {" ("}
-                                {startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate()}.
-                                {startDate.getMonth() < 10 ? "0" + parseInt(startDate.getMonth()+1) : parseInt(startDate.getMonth()+1)} - {" "}
-                                {endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate()}.
-                                {endDate.getMonth() < 10 ? "0" + parseInt(endDate.getMonth()+1) + ") " : parseInt(endDate.getMonth()+1) + ") "}
-                                for {noPeople} people has been confirmed! </h2>
-                                <Link to="/"><button className="btnPopup">Go back</button></Link>
-                            </div>
-                    </Popup>}
-                {(noPeople == 0) && <Link to="/search_people"><button class="btnMaxCard">Reserve</button></Link>}
-                {destination.childFriendly &&
-                    <img className="icons" style={{marginLeft:"20px"}} src="/children.png"/>}
-            </div>
-        </div>);
-    })
+        return noDays;
+    }
+
+
+    const [seePopup, setSeePopup] = useState(false);
+
+    const handleReserveBtn = () => {
+        fetch(`http://localhost:8000/destinations/update/${id}`, {
+            method: 'PUT',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({"numberOfSeats": (destination.numberOfSeats - noPeople)})
+        }).then(response => response.json())
+        .then(data => {console.log("number of seats updated: "); console.log(data.numberOfSeats);});
+        setSeePopup(true);
+    }
+
+    const handlePopupBtn = () => {
+        setSeePopup(false);
+    }
 
     return(
         <div>
-            {showDestination}
+            {destination && 
+             <div class="divMaxCard">
+                <p class="lblMaxCard">{destination.location} {destination.isOffer ? " - 10% OFF" : " "}</p>
+                <hr style={{border:"1px solid black", width:"60%", marginLeft:"3%"}}></hr>
+                <div style={{display:"inline-flex", marginBottom:"-20px"}}>
+                    <img className="imgMaxCard" src={destination.image}/>
+                    <div>
+                        <p class="txtMaxCard">{destination.description}</p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%"}}>{getNoDays(destination.startDate, destination.endDate) + " days: "} 
+                            {getDate(destination.startDate) < 10 ? "0" + getDate(destination.startDate) : getDate(destination.startDate)}.
+                            {getMonth(destination.startDate) < 10 ? "0" + parseInt(getMonth(destination.startDate)+1) : parseInt(getMonth(destination.startDate)+1)} - {" "}
+                            {getDate(destination.endDate) < 10 ? "0" + getDate(destination.endDate) : getDate(destination.endDate)}.
+                            {getMonth(destination.endDate) < 10 ? "0" + parseInt(getMonth(destination.endDate)+1) : parseInt(getMonth(destination.endDate)+1)}
+                        </p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%", marginTop:"-20px"}}>Seats available: {destination.numberOfSeats}</p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"30%", marginTop:"-20px"}}>Price per night: {destination.price * (100 - destination.offer)/100}€ / night</p>
+                        <p class="txtMaxCard" style={{fontSize:"24px", marginLeft:"30%", marginTop: "-20px", fontWeight:"500", color:"red"}}>BEFORE DISCOUNT: {destination.price}€ / night</p>
+                        <p class="txtMaxCard" style={{fontSize:"42px", marginLeft:"10px", marginTop:"0px", fontWeight: "650"}}>
+                            Total price: {(destination.price * (100 - destination.offer)/100) * getNoDays(destination.startDate, destination.endDate)}€ /  
+                            {getNoDays(destination.startDate, destination.endDate)} nights</p>
+                    </div>
+                </div>
+                <div style={{marginTop:"-10px"}}>
+                {(noPeople > 0) && <button class="btnMaxCard" onClick={handleReserveBtn}>Reserve</button>}
+                {seePopup && 
+                <div className="popupReserved">
+                    <h1 className="lblPopup">Succes!</h1>
+                    <h2 className="txtPopup">Your reservation for {destination.location} {" ("}
+                        {getDate(destination.startDate) < 10 ? "0" + getDate(destination.startDate) : getDate(destination.startDate)}.
+                        {getMonth(destination.startDate) < 10 ? "0" + parseInt(getMonth(destination.startDate)+1) : parseInt(getMonth(destination.startDate)+1)} - {" "}
+                        {getDate(destination.endDate) < 10 ? "0" + getDate(destination.endDate) : getDate(destination.endDate)}.
+                        {getMonth(destination.endDate) < 10 ? "0" + parseInt(getMonth(destination.endDate)+1) + ") " : parseInt(getMonth(destination.endDate)+1) + ") "}
+                        for {noPeople} people has been confirmed!
+                        </h2>
+        
+                    <button className="btnPopup" onClick={handlePopupBtn}>Go back</button>
+                </div>}
+                {(!noPeople || noPeople == 0) && <Link to="/search_people"><button class="btnMaxCard">Reserve</button></Link>}
+                {destination.isChildFriendly &&
+                    <img className="icons" style={{marginLeft:"20px"}} src="/children.png"/>}
+                </div>
+            </div>}
             <Link to="/destinations"><button class="btnNav" style={{marginLeft: "85%", position:"relative"}}>Back</button></Link>
         </div>
     );

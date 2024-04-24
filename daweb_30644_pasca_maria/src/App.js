@@ -36,6 +36,11 @@ export default function App() {
     localStorage.setItem("showOffers", true);
   }
 
+  const handleLogoutbtn = () => {
+    sessionStorage.clear();
+    window.location.href = `http://localhost:3000`;
+  }
+
   var role = sessionStorage.getItem("role")
   return (
     <div style={{padding:"0px", margin:"0px"}}>
@@ -43,6 +48,7 @@ export default function App() {
         <button class="logo"/>
         <div class="dropdown-content">
           {role != "agent" && role != "client" && <a href="/login">Login</a>}
+          {role == "client" && <a onClick={handleLogoutbtn}>Logout</a>}
           {role == "agent" && <a href="agentdashboard">Dashboard</a>}
           <a href="/home">Home</a>          
           <a href="/search">Search</a>

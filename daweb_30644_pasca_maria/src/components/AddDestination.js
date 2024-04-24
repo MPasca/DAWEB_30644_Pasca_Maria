@@ -16,32 +16,40 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 export default function AddDestination () {
-    console.log("in add destination");
     const [newLocation, setNewLocation] = useState('');
     const [newPrice, setNewPrice] = useState(0);
     const [newSeats, setNewSeats] = useState(0);
     const [newOffer, setNewOffer] = useState(0);
     const [newDescription, setNewDescription] = useState('');
     const [isChildFriendly, setChildFriendly] = useState(false);
+    const [newImagePath, setNewImagePath] = useState('');
 
     const [startDatePicker, setStartDatePicker] = useState(dayjs());
     const [endDatePicker, setEndDatePicker] = useState(dayjs());
 
 
     const handleClick = () => {
-        var newDestination = {
-            location: newLocation,
-            description: newDescription,
-            price: newPrice,
-            noSeats: newSeats,
-            childFriendly: isChildFriendly,
-            img: "aveiro.png",
-            startDate: startDatePicker,
-            endDate: endDatePicker,
-            offer: newOffer
-        }
-        console.log(newDestination);
-        // add backend request here
+        const newDestination = {
+            "location": newLocation,
+            "description": newDescription,
+            "numberOfSeats": parseInt(newSeats),
+            "isChildFriendly": isChildFriendly && isChildFriendly == "true",            
+            "startDate": dayjs(startDatePicker).format('YYYY-MM-DD'),
+            "endDate": dayjs(endDatePicker).format('YYYY-MM-DD'),
+            "price": parseInt(newPrice),
+            "offer": parseInt(newOffer) || 0,
+            "image": newImagePath
+        };
+
+        fetch('http://localhost:8000/destinations/create', {
+            method: 'POST',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newDestination)
+        }).then(response => response.json())
+        .then(data => {console.log("new destination added: " + data.id)})
+        .catch((error) => console.error('Error fetching data:', error));
+
         window.location.href = `http://localhost:3000/agentdashboard`;
     }
 
@@ -117,6 +125,14 @@ export default function AddDestination () {
                         />
                     </LocalizationProvider>
 
+                    <h2>Image:</h2>
+                    <TextField required
+                        id="idImage"
+                        label="Image"
+                        variant="standard"
+                        value={newImagePath}
+                        onChange={(e) => setNewImagePath(e.target.value)}
+                    />
                     
                     <FormControl>
                         <FormLabel id="demo-radio-buttons-group-label">Is child friendly?</FormLabel>

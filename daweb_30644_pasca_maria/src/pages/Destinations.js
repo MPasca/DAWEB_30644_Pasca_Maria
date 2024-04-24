@@ -9,6 +9,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { createFilterOptions } from "@mui/material";
 
 export default function Destinations(){
+    sessionStorage.getItem("id") && sessionStorage.removeItem("id");
 
     var chosenLocation = sessionStorage.getItem("chosenLocation");
     var numberAdults = JSON.parse(sessionStorage.getItem("adults"));
@@ -43,12 +44,12 @@ export default function Destinations(){
             result = result.filter((destination) => destination.endDate <= endDate); 
         }
         if(numberChildren > 0){
-            result = result.filter((destination) => destination.childFriendly === true);
+            result = result.filter((destination) => destination.isChildFriendly);
         }
 
         if(numberAdults || numberChildren)
         {
-            result = result.filter((destination) => numberChildren + numberAdults < destination.noSeats);
+            result = result.filter((destination) => numberChildren + numberAdults < destination.numberOfSeats);
         }
 
         console.log(result);
@@ -62,12 +63,13 @@ export default function Destinations(){
             (!showOffers || (showOffers && destination.offer != 0)) &&
             <div class="divMinCard">
                 <p class="lblMinCard">{destination.location}</p>
-                {destination.offer != 0 && <div>
-                    <img className="imgMinCard" src={destination.img} style={{marginBottom:"0px"}}/>
-                 <p class="lblMinCard" style={{marginTop:"5px", padding:"0px"}}>SPECIAL OFFER: 10% OFF</p>
+                <img className="imgMinCard" src={destination.image} style={{marginBottom:"40px"}}/>
+                {destination.offer > 0 && 
+                <div>
+                 <p class="lblMinCard" style={{marginTop:"-10px", padding:"0px"}}>SPECIAL OFFER: {destination.offer}% OFF</p>
                 </div>}
-                {destination.offer == 0 && <img className="imgMinCard" src={destination.img}/>}
-                <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"10px"}}>Details</btn></Link>
+                {destination.offer == 0 && <h1 style={{paddingBottom:"20px"}}/>}
+                <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"20px"}}>Details</btn></Link>
             </div>
         );
     });
@@ -77,8 +79,13 @@ export default function Destinations(){
             if(startDatePicker >= dayjs()) {
                 setStartDate(startDatePicker);
                 setEndDate(endDatePicker);
-                localStorage.setItem("startDate", JSON.stringify(startDatePicker));
-                localStorage.setItem("endDate", JSON.stringify(endDatePicker));
+                sessionStorage.setItem("startDate", JSON.stringify(startDatePicker));
+                sessionStorage.setItem("endDate", JSON.stringify(endDatePicker));
+                window.location.reload();
+            }
+            else {
+                sessionStorage.getItem("startDate") && sessionStorage.removeItem("startDate");
+                sessionStorage.getItem("endDate") && sessionStorage.removeItem("endDate");
                 window.location.reload();
             }
         }
@@ -88,7 +95,7 @@ export default function Destinations(){
         <div style={{paddingTop:"2%"}}>
             <div style={{display:"block"}}>
                 <Link to="/search"><btn className="btnNav" style={{display:"inline-flex", textDecoration:"none", width:"200px", height:"100px", paddingLeft:"2%", marginLeft:"0%", marginRight:"5%", padding:".5%"}}>Search again</btn></Link>
-                <div style={{border:"1px solid black", borderRadius:"20%", display:"inline-flex", width:"650px", height:"90px", alignItems:"center", paddingLeft:"10px", paddingRight:"5px", background:"#D9D9D9"}}>
+                <div style={{border:"1px solid black", borderRadius:"25px", display:"inline-flex", width:"650px", height:"90px", alignItems:"center", paddingLeft:"10px", paddingRight:"5px", background:"#D9D9D9"}}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Start date"
@@ -111,7 +118,7 @@ export default function Destinations(){
             <div class="gridDestinations">
                 {showDestinations}
             </div>
-            <Link to="/home"><button class="btnNav" style={{marginTop:"5%", width:"auto", marginLeft: "0%", marginBottom:"5%"}}>Back home</button></Link>
+            <Link to="/home"><button class="btnNav" style={{marginTop:"5%", width:"auto", marginLeft: "0%", marginBottom:"5%"}}>Home</button></Link>
         </div>
     );
 }

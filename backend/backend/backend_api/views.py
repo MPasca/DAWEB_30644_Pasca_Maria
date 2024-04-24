@@ -86,7 +86,8 @@ def create_destination(request):
     serializer = DestinationSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"message": "incorrect destination information"}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['PUT'])

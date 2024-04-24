@@ -3,10 +3,9 @@ import Dashboard from "../components/Dashboard";
 import { Link } from "react-router-dom";
 
 export default function AgentDashboard () {
-    var id = sessionStorage.getItem("id");
+    var id = sessionStorage.getItem("userId");
         // add logic for checking in persistence if the user exists and has privileges, get name
         console.log(id);
-        const name = "agent1";
 
     var checkPrivilege = false;
     if(id == 0)
@@ -22,7 +21,7 @@ export default function AgentDashboard () {
         <div>
             {checkPrivilege && <div>
                 <Link to="/login"><button className="btnNav" style={{ marginLeft:"80%", height:"100px" }} onClick={handleLogoutbtn}>Logout</button></Link>
-                <h1 class="h1Title">Hello, {name}</h1>
+                <h1 class="h1Title">Hello - Admin Dashboard</h1>
                 <hr class="titleLine" style={{width:"60%", marginBottom: "1%"}}/>
                 <Dashboard/>
             </div>}
