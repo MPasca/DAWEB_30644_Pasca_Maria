@@ -10,14 +10,34 @@ export default function Login (){
         e.preventDefault()
         const credentials = {email, password};
         console.log(credentials);
+        let id;
         // send to backend for confirmation
-        const role = "agent"
-        const id = 0;
-        sessionStorage.setItem("id", id);
-        sessionStorage.setItem("role", role);
-        if(role == "agent") {
-            window.location.href = `http://localhost:3000/agentdashboard`;
+        if(email == "agent") {
+            if(password == "password_agent123") {
+                id = 0;
+                sessionStorage.setItem("userId", id);
+                window.location.href = `http://localhost:3000/agentdashboard`;
+            }
+            else {
+                throw new Error("wrong password");
+            }
         }
+        const role = "agent"
+        sessionStorage.setItem("role", role);
+
+        fetch('http://localhost:8000/login', {
+            method: 'POST',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({"email":email, "password":password})
+        }).then(response => response.json())
+            .then(data => {
+                const id = data.id;
+                sessionStorage.setItem("userId", id);
+                sessionStorage.setItem("role", "client");
+                window.location.href = `http://localhost:3000/`;
+            })
+            .catch((error) => console.error('Error when trying to log in:', error));
     }
 
     return(
@@ -25,7 +45,7 @@ export default function Login (){
             <div style={{width:"80%", marginTop: "5%"}}>
                 <h1 class="h1Title">Login</h1>
                 <hr class="titleLine"/>
-                <div style={{backgroundColor:"#D9D9D9", display:"inline-flex", marginTop:"5%", padding:"2%", paddingBottom: "5%", border: "1px solid black", borderRadius: "10%", marginBottom:"5%"}}>
+                <div style={{backgroundColor:"#D9D9D9", display:"inline-flex", marginTop:"5%", padding:"2%", paddingBottom: "5%", border: "1px solid black", borderRadius: "25px", marginBottom:"5%"}}>
                     <TextField required
                         id="idEmail"
                         label="Email"

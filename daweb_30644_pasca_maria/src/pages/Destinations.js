@@ -9,15 +9,28 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { createFilterOptions } from "@mui/material";
 
 export default function Destinations(){
+    sessionStorage.getItem("id") && sessionStorage.removeItem("id");
 
-    var chosenLocation = localStorage.getItem("chosenLocation");
-    var numberAdults = JSON.parse(localStorage.getItem("adults"));
-    var numberChildren = JSON.parse(localStorage.getItem("children"));
-    var storageStartDate = JSON.parse(localStorage.getItem("startDate"));
-    var storageEndDate = JSON.parse(localStorage.getItem("endDate"));
+    var chosenLocation = sessionStorage.getItem("chosenLocation");
+    var numberAdults = JSON.parse(sessionStorage.getItem("adults"));
+    var numberChildren = JSON.parse(sessionStorage.getItem("children"));
+    var storageStartDate = JSON.parse(sessionStorage.getItem("startDate"));
+    var storageEndDate = JSON.parse(sessionStorage.getItem("endDate"));
 
-    var onlyOffers = JSON.parse(localStorage.getItem("showOffers"));
-    var existingDestinations = JSON.parse(localStorage.getItem("mocks"));
+    var onlyOffers = JSON.parse(sessionStorage.getItem("showOffers"));
+
+    const [existingDestinations, setExistingDestinations] = useState();
+
+    useEffect(() => {
+        fetch('http://localhost:8000/destinations', {
+            method: 'GET',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"}
+        }).then(response => response.json())
+            .then(data => { setExistingDestinations(data); })
+            .catch((error) => console.error('Error fetching data:', error));
+
+    }, [])
 
     const [startDate, setStartDate] = React.useState(storageStartDate);
     const [endDate, setEndDate] = React.useState(storageEndDate);
@@ -34,53 +47,63 @@ export default function Destinations(){
 
     const filterResult = () => {
         var result = existingDestinations;
-
-        if(chosenLocation !== 'null'){
+        if(chosenLocation){
             result = result.filter((destination) => destination.location === chosenLocation);
         } 
 
-        if(startDate !== null && endDate !== null && startDate !== endDate){
+        if(startDate && endDate && startDate !== endDate){
             result = result.filter((destination) => destination.startDate >= startDate);
-            result = result.filter((destination) => destination.endDate <= endDate);    
+            result = result.filter((destination) => destination.endDate <= endDate); 
         }
         if(numberChildren > 0){
-            result = result.filter((destination) => destination.childFriendly === true);
+            result = result.filter((destination) => destination.isChildFriendly);
         }
 
-        result = result.filter((destination) => numberChildren + numberAdults < destination.noSeats);
+        if(numberAdults || numberChildren)
+        {
+            result = result.filter((destination) => numberChildren + numberAdults < destination.numberOfSeats);
+        }
 
+        console.log(result);
         return result;
     }
 
-    const [destinations, setDestinations] = useState(filterResult());
+    const [destinations, setDestinations] = useState();
+    useEffect(() => {
+        if(existingDestinations) {
+            setDestinations(filterResult());
+        }
+    }, [existingDestinations])
 
-    const showDestinations = destinations.map((destination) => {
-        console.log(JSON.parse(destination.id));
+
+    const showDestinations = destinations && destinations.map((destination) => {
         return(
             (!showOffers || (showOffers && destination.offer != 0)) &&
             <div class="divMinCard">
                 <p class="lblMinCard">{destination.location}</p>
-                {destination.offer != 0 && <div>
-                    <img className="imgMinCard" src={destination.img} style={{marginBottom:"0px"}}/>
-                 <p class="lblMinCard" style={{marginTop:"5px", padding:"0px"}}>SPECIAL OFFER: 10% OFF</p>
+                <img className="imgMinCard" src={destination.image} style={{marginBottom:"40px"}}/>
+                {destination.offer > 0 && 
+                <div>
+                 <p class="lblMinCard" style={{marginTop:"-10px", padding:"0px"}}>SPECIAL OFFER: {destination.offer}% OFF</p>
                 </div>}
-                {destination.offer == 0 && <img className="imgMinCard" src={destination.img}/>}
-                <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"10px"}}>Details</btn></Link>
+                {destination.offer == 0 && <h1 style={{paddingBottom:"20px"}}/>}
+                <Link to={`/destination/${destination.id}`}><btn class="btnMinCard" style={{marginTop:"20px"}}>Details</btn></Link>
             </div>
         );
     });
 
     const handleFilterClick = () => {
-        console.log("in filter");
         if(startDatePicker <= endDatePicker) {
-            console.log("start date < end date")
             if(startDatePicker >= dayjs()) {
                 setStartDate(startDatePicker);
                 setEndDate(endDatePicker);
-                localStorage.setItem("startDate", JSON.stringify(startDatePicker));
-                localStorage.setItem("endDate", JSON.stringify(endDatePicker));
-                console.log(startDatePicker + " " + startDate);
-                console.log(endDatePicker + " " + endDate);
+                sessionStorage.setItem("startDate", JSON.stringify(startDatePicker));
+                sessionStorage.setItem("endDate", JSON.stringify(endDatePicker));
+                window.location.reload();
+            }
+            else {
+                sessionStorage.getItem("startDate") && sessionStorage.removeItem("startDate");
+                sessionStorage.getItem("endDate") && sessionStorage.removeItem("endDate");
                 window.location.reload();
             }
         }
@@ -90,7 +113,7 @@ export default function Destinations(){
         <div style={{paddingTop:"2%"}}>
             <div style={{display:"block"}}>
                 <Link to="/search"><btn className="btnNav" style={{display:"inline-flex", textDecoration:"none", width:"200px", height:"100px", paddingLeft:"2%", marginLeft:"0%", marginRight:"5%", padding:".5%"}}>Search again</btn></Link>
-                <div style={{border:"1px solid black", borderRadius:"20%", display:"inline-flex", width:"650px", height:"90px", alignItems:"center", paddingLeft:"10px", paddingRight:"5px", background:"#D9D9D9"}}>
+                <div style={{border:"1px solid black", borderRadius:"25px", display:"inline-flex", width:"650px", height:"90px", alignItems:"center", paddingLeft:"10px", paddingRight:"5px", background:"#D9D9D9"}}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Start date"
@@ -111,9 +134,9 @@ export default function Destinations(){
             <h1 class="h1Title">Destinations for you</h1>
             <hr class="titleLine" style={{marginBottom:"50px", width:"auto", marginRight:"30%"}}></hr>
             <div class="gridDestinations">
-                {showDestinations}
+                {existingDestinations && showDestinations}
             </div>
-            <Link to="/home"><button class="btnNav" style={{marginTop:"5%", width:"auto", marginLeft: "0%", marginBottom:"5%"}}>Back home</button></Link>
+            <Link to="/home"><button class="btnNav" style={{marginTop:"5%", width:"auto", marginLeft: "0%", marginBottom:"5%"}}>Home</button></Link>
         </div>
     );
 }

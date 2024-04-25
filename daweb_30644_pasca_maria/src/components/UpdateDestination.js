@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function UpdateDestination () {
     const changeId = JSON.parse(sessionStorage.getItem("destinationId"));
-    console.log(changeId);
 
-    const existingDestinations = JSON.parse(localStorage.getItem("mocks"));
-    var crtDestination = existingDestinations.filter((destination) => destination.id == changeId);
-    console.log(crtDestination);
+    const [destinationToUpdate, setDestinationToUpdate] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/destinations/${changeId}`, {
+            method: 'GET',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"}
+        }).then(response => response.json())
+            .then(data => { setDestinationToUpdate(data); })
+            .catch((error) => console.error('Error fetching data:', error));
+
+    }, [])
     
     const [newLocation, setNewLocation] = useState('');
     const [newPrice, setNewPrice] = useState(0);
@@ -16,46 +25,57 @@ export default function UpdateDestination () {
     const [newOffer, setNewOffer] = useState(0);
     
     const handleEditBtn = () => {
-        if(newLocation != '')
+        let updatedData = {"location": newLocation,
+        "price" : newPrice,
+        "numberOfSeats" : newSeats, 
+        "offer" : newOffer};
+
+        if(!newLocation || newLocation == '')
         {   
-            // send request to backend to update location
-            crtDestination.location = newLocation;
-            console.log("new destination: " + crtDestination.location);
+            updatedData.location = destinationToUpdate.location;
         }
 
-        if(newPrice > 0)
+        if(!newPrice || newPrice <= 0)
         {
-            // send request to backend to update price
-            crtDestination.price = newPrice;
-            console.log("new price: " + crtDestination.price)
+           updatedData.price = destinationToUpdate.price;
         }
 
-        if(newSeats > 0)
+        if(!newSeats || newSeats <= 0)
         {
-            // send request to backend to update seats (check if the number is greater than the number of seats already reserved)
-            crtDestination.noSeats = newSeats;
-            console.log("current number of seats: " + crtDestination.seats)
+            updatedData.numberOfSeats = destinationToUpdate.numberOfSeats;
         }
 
-        if(newOffer >= 0)
+        if(!newOffer || newOffer < 0)
         {
-            // send request to backend to update offer
-            crtDestination.offer = newOffer;
-            console.log("current offer: " + crtDestination.offer)
+            updatedData.offer = destinationToUpdate.offer;
         }
+
+
+                            
+        console.log(updatedData);
+        fetch(`http://localhost:8000/destinations/update/${changeId}`, {
+            method: 'PUT',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(updatedData)
+        }).then(response => response.json())
+        .then(data => { console.log("destination updated: " + data.id);
+            // window.location.href = `http://localhost:3000/agentdashboard`;
+        })
+        .catch((error) => console.error('Error fetching data:', error));
     }
 
 
     return(
         <div>
-            <h1 className="h1Title">Edit destination {crtDestination.id}</h1>
+            <h1 className="h1Title">Edit destination {changeId}</h1>
             <hr class="titleLine" style={{width:"60%", marginBottom: "1%"}}/>
             <div style={{display:"grid", gridTemplateColumns:"repeat(2, 1fr)", width:"60%", padding:"30px", border:"2px solid black", borderRadius:"10%", backgroundColor:"#D9D9D9"}}>
                     <h2 style={{marginBottom:"50px"}}>Location:</h2>
                     <TextField
                         id="idLocation"
                         label="Location"
-                        defaultValue={crtDestination[0].location}
+                        defaultValue={destinationToUpdate.location}
                         onChange={(e) => setNewLocation(e.target.value)}
                     />
 
@@ -63,7 +83,7 @@ export default function UpdateDestination () {
                     <TextField
                         id="idPrice"
                         label="Price"
-                        defaultValue={crtDestination[0].price}
+                        defaultValue={destinationToUpdate.price}
                         onChange={(e) => setNewPrice(e.target.value)}
                         helperText="The value must be greater than 0"
                     />
@@ -72,7 +92,7 @@ export default function UpdateDestination () {
                     <TextField
                         id="idSeats"
                         label="Number of seats"
-                        defaultValue={crtDestination[0].noSeats}
+                        defaultValue={destinationToUpdate.noSeats}
                         onChange={(e) => setNewSeats(e.target.value)}
                         helperText="The value must be greater than 0"
                     />
@@ -81,7 +101,7 @@ export default function UpdateDestination () {
                     <TextField
                         id="idOffer"
                         label="Offer percent"
-                        defaultValue={crtDestination[0].offer}
+                        defaultValue={destinationToUpdate.offer}
                         onChange={(e) => setNewOffer(e.target.value)}
                         helperText="The value is 0 if no offer, otherwise greater than 0."
                     />

@@ -2,23 +2,55 @@ import { Link } from "react-router-dom";
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Dashboard () {
-    var existingDestinations = JSON.parse(localStorage.getItem("mocks"));
 
-    const [updateId, setDestinationToUpdate] = useState(existingDestinations[0].id);
-    const [deleteId, setDestinationToDelete] = useState(existingDestinations[0].id);
+    const [existingDestinations, setExistingDestinations] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/destinations', {
+            method: 'GET',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"}
+        }).then(response => response.json())
+        .then(data => { setExistingDestinations(data); })
+        .catch((error) => console.error('Error fetching data:', error));
+
+    }, [])
+
+    const [updateId, setDestinationToUpdate] = useState();
+    const [deleteId, setDestinationToDelete] = useState();
 
     const handleEdit = () => {
         console.log("in handle edit for destination id: " + updateId);
-        sessionStorage.setItem("destinationId", updateId);
+        sessionStorage.setItem("destinationId", updateId || existingDestinations[0].id);
+        window.location.href = "http://localhost:3000/update_destination";
     }
 
     const handleDelete = () => {
-        console.log("in handle delete for destination id: " + deleteId);
-        // endpoint for delete
+        if(deleteId) {
+            fetch(`http://localhost:8000/destinations/delete/${deleteId}`, {
+                method: 'DELETE',
+                mode: 'cors',
+                headers:{"Content-Type":"application/json"}
+            }).then(response => response.json())
+                .then(data => { console.log("deleted element with id: " + deleteId) })
+                .catch((error) => console.error('Error deleting destination:', error));
+
+        }
+        else {
+            fetch(`http://localhost:8000/destinations/delete/${existingDestinations[0].id}`, {
+                method: 'DELETE',
+                mode: 'cors',
+                headers:{"Content-Type":"application/json"}
+            }).then(response => response.json())
+                .then(data => { console.log("deleted element with id: " + deleteId) })
+                .catch((error) => console.error('Error deleting destination:', error));
+
+        }
+        setDestinationToDelete();
     }
 
     const showDestinations = existingDestinations.map((destination) => {
@@ -27,9 +59,9 @@ export default function Dashboard () {
                 <td style={{whiteSpace: 'nowrap'}}>{destination.id}</td>
                 <td style={{whiteSpace: 'nowrap'}}>{destination.location}</td>
                 <td style={{whiteSpace: 'nowrap'}}>{destination.price}</td>
-                <td style={{whiteSpace: 'nowrap'}}>{destination.noSeats}</td>
-                <td style={{whiteSpace: 'nowrap'}}>{JSON.stringify(destination.childFriendly)}</td>
-                <td style={{whiteSpace: 'nowrap'}}>{destination.offer}</td>
+                <td style={{whiteSpace: 'nowrap'}}>{destination.numberOfSeats}</td>
+                <td style={{whiteSpace: 'nowrap'}}>{JSON.stringify(destination.isChildFriendly)}</td>
+                <td style={{whiteSpace: 'nowrap'}}>{destination.offer}%</td>
             </tr>);
     });
 
@@ -64,7 +96,7 @@ export default function Dashboard () {
                             onChange={e => setDestinationToUpdate(e.target.value)}
                             >{existingDestinations.map((mock) => <option value={mock.id}>{mock.id}</option>)}
                     </select>
-                    <Link to="/update_destination"><button style={{fontFamily:"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", fontSize:"24px"}} onClick={handleEdit}>Update</button></Link>
+                    <button style={{fontFamily:"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", fontSize:"24px"}} onClick={handleEdit}>Update</button>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", border:"1px solid black", borderRadius:"10px", backgroundColor:"#D9D9D9", padding:"20px", alignItems:"center"}}>
                     <h2 style={{marginRight:"10px"}}>Del. destination:</h2>
@@ -73,7 +105,7 @@ export default function Dashboard () {
                             onChange={e => setDestinationToDelete(e.target.value)}
                             >{existingDestinations.map((mock) => <option value={mock.id}>{mock.id}</option>)}
                     </select>
-                    <button style={{fontFamily:"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", fontSize:"24px"}}>Delete</button>
+                    <button style={{fontFamily:"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", fontSize:"24px"}} onClick={handleDelete}>Delete</button>
                 </div>
             </div>
         </div>

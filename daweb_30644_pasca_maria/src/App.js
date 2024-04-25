@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, json} from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Contact from './pages/Contact';
 import Destinations from './pages/Destinations';
@@ -13,19 +13,65 @@ import Register from './pages/Register';
 import UpdateDestination from "./components/UpdateDestination";
 import AddDestination from './components/AddDestination';
 
+import { useEffect, useState } from 'react';
+
+
 
 export default function App() {
+  const [userLocation, setUserLocation] = useState();
+
+  const getUserLocation = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation({latitude, longitude});
+      }, (error) => console.error('Error getting user location: ', error));
+    }
+    else {
+      console.error("Geolocation not supported on this browser");
+    }
+  }
+
+  useEffect(() => {
+    userLocation && sessionStorage.setItem("userLocation", JSON.stringify(userLocation));
+  }, [userLocation])
+
+  const [existingDestinations, setExistingDestinations] = useState([]);
+  useEffect(() => {
+      fetch('http://localhost:8000/destinations', {
+        method: 'GET',
+        mode: 'cors',
+        headers:{"Content-Type":"application/json"}
+    }).then(response => response.json())
+      .then(data => { setExistingDestinations(data); })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, [])
+
+  useEffect(() => {
+    sessionStorage.setItem("existingDestinations", JSON.stringify(existingDestinations));
+  }, [existingDestinations])
+
   const handleOfferClick = () => {
     localStorage.setItem("showOffers", true);
+  }
+
+
+  const handleLogoutbtn = () => {
+    sessionStorage.clear();
+    window.location.href = `http://localhost:3000`;
   }
 
   var role = sessionStorage.getItem("role")
   return (
     <div style={{padding:"0px", margin:"0px"}}>
+      {getUserLocation()}
       <div class="dropdown">
         <button class="logo"/>
         <div class="dropdown-content">
           {role != "agent" && role != "client" && <a href="/login">Login</a>}
+
+          {role == "client" && <a onClick={handleLogoutbtn}>Logout</a>}
+
           {role == "agent" && <a href="agentdashboard">Dashboard</a>}
           <a href="/home">Home</a>          
           <a href="/search">Search</a>

@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function SearchLocation(){
-    var existingLocations = JSON.parse(localStorage.getItem("mocks")).map((mock) => mock.location);
+    var existingLocations = JSON.parse(sessionStorage.getItem("existingDestinations")).map((destination) => destination.location);
+
+    
     const handleClick = () => {
-        localStorage.setItem("chosenLocation", location);
+        sessionStorage.setItem("chosenLocation", location);
     }
 
     const[location, setLocation] = useState(existingLocations[0]);
@@ -19,7 +21,7 @@ export default function SearchLocation(){
                     <select class="btnTitle"
                         value={location}
                         onChange={e => setLocation(e.target.value)}
-                        >{existingLocations.map((mock) => <option value={mock}>{mock}</option>)}
+                        >{existingLocations.map((destination) => <option value={destination}>{destination}</option>)}
                     </select>
                     <Link to="/search_date"><button class="btnNav" style={{ display:"flow", marginLeft:"75%", marginTop:"5%"}} onClick={handleClick}>Next</button></Link>
                     <Link to="/home"><button class="btnNav" style={{ display:"flow", marginLeft:"0%", marginTop:"-5%"}}>Back</button></Link>
