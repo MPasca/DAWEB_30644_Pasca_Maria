@@ -12,7 +12,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import UpdateDestination from "./components/UpdateDestination";
 import AddDestination from './components/AddDestination';
+
 import { useEffect, useState } from 'react';
+
 
 
 export default function App() {
@@ -53,6 +55,7 @@ export default function App() {
     localStorage.setItem("showOffers", true);
   }
 
+
   const handleLogoutbtn = () => {
     sessionStorage.clear();
     window.location.href = `http://localhost:3000`;
@@ -66,7 +69,9 @@ export default function App() {
         <button class="logo"/>
         <div class="dropdown-content">
           {role != "agent" && role != "client" && <a href="/login">Login</a>}
+
           {role == "client" && <a onClick={handleLogoutbtn}>Logout</a>}
+
           {role == "agent" && <a href="agentdashboard">Dashboard</a>}
           <a href="/home">Home</a>          
           <a href="/search">Search</a>

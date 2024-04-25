@@ -8,6 +8,7 @@ class User(models.Model):
     password = models.CharField(max_length=30, null=False, blank=False)
 
 
+
 class Destination(models.Model):
     id = models.AutoField(primary_key=True)
     location = models.CharField(max_length=100, null=False, blank=False)
@@ -19,3 +20,4 @@ class Destination(models.Model):
     price = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(10)])
     offer = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
     image = models.CharField(null=False, blank=False, max_length=250)
+

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+
 import { TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function UpdateDestination () {
     const changeId = JSON.parse(sessionStorage.getItem("destinationId"));
-
 
     const [destinationToUpdate, setDestinationToUpdate] = useState([]);
 
@@ -18,7 +18,6 @@ export default function UpdateDestination () {
             .catch((error) => console.error('Error fetching data:', error));
 
     }, [])
-
     
     const [newLocation, setNewLocation] = useState('');
     const [newPrice, setNewPrice] = useState(0);
@@ -64,8 +63,6 @@ export default function UpdateDestination () {
             // window.location.href = `http://localhost:3000/agentdashboard`;
         })
         .catch((error) => console.error('Error fetching data:', error));
-
-
     }
 
 

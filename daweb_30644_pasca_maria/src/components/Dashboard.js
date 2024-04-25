@@ -53,8 +53,6 @@ export default function Dashboard () {
         setDestinationToDelete();
     }
 
-
-
     const showDestinations = existingDestinations.map((destination) => {
             return (    
             <tr key={destination.id}>

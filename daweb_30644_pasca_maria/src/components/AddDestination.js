@@ -24,6 +24,7 @@ export default function AddDestination () {
     const [isChildFriendly, setChildFriendly] = useState(false);
     const [newImagePath, setNewImagePath] = useState('');
 
+
     const [startDatePicker, setStartDatePicker] = useState(dayjs());
     const [endDatePicker, setEndDatePicker] = useState(dayjs());
 
@@ -49,7 +50,7 @@ export default function AddDestination () {
         }).then(response => response.json())
         .then(data => {console.log("new destination added: " + data.id)})
         .catch((error) => console.error('Error fetching data:', error));
-
+      
         window.location.href = `http://localhost:3000/agentdashboard`;
     }
 

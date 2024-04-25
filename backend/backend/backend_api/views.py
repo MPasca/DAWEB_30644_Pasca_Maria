@@ -90,6 +90,7 @@ def create_destination(request):
     return Response({"message": "incorrect destination information"}, status=status.HTTP_403_FORBIDDEN)
 
 
+
 @api_view(['PUT'])
 def update_destination(request, pk):
     destination = Destination.objects.get(id=pk)

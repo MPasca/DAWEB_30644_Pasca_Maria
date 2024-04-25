@@ -38,9 +38,6 @@ export default function Login (){
                 window.location.href = `http://localhost:3000/`;
             })
             .catch((error) => console.error('Error when trying to log in:', error));
-
-        if(role == "agent") {
-        }
     }
 
     return(
