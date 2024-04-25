@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 export default function UpdateDestination () {
     const changeId = JSON.parse(sessionStorage.getItem("destinationId"));
 
-    console.log(changeId);
 
     const [destinationToUpdate, setDestinationToUpdate] = useState([]);
 
@@ -27,32 +26,34 @@ export default function UpdateDestination () {
     const [newOffer, setNewOffer] = useState(0);
     
     const handleEditBtn = () => {
+        let updatedData = {"location": newLocation,
+        "price" : newPrice,
+        "numberOfSeats" : newSeats, 
+        "offer" : newOffer};
+
         if(!newLocation || newLocation == '')
         {   
-            setNewLocation(destinationToUpdate.location);
+            updatedData.location = destinationToUpdate.location;
         }
 
         if(!newPrice || newPrice <= 0)
         {
-            setNewPrice(destinationToUpdate.price);
+           updatedData.price = destinationToUpdate.price;
         }
 
         if(!newSeats || newSeats <= 0)
         {
-            setNewSeats(destinationToUpdate.numberOfSeats);
+            updatedData.numberOfSeats = destinationToUpdate.numberOfSeats;
         }
 
         if(!newOffer || newOffer < 0)
         {
-            setNewOffer(destinationToUpdate.offer);
+            updatedData.offer = destinationToUpdate.offer;
         }
 
-        const updatedData = {"location": newLocation,
-                            "price" : newPrice,
-                            "numberOfSeats" : newSeats, 
-                            "offer" : newOffer};
 
-
+                            
+        console.log(updatedData);
         fetch(`http://localhost:8000/destinations/update/${changeId}`, {
             method: 'PUT',
             mode: 'cors',

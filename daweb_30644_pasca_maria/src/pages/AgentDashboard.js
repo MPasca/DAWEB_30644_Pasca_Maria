@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 export default function AgentDashboard () {
     var id = sessionStorage.getItem("userId");
         // add logic for checking in persistence if the user exists and has privileges, get name
-        console.log(id);
 
     var checkPrivilege = false;
     if(id == 0)
