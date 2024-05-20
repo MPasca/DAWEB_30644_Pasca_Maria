@@ -14,4 +14,10 @@ urlpatterns = [
     path('destinations/create', views.create_destination),
     path('destinations/update/<int:pk>', views.update_destination),
     path('destinations/delete/<int:pk>', views.delete_destination),
+
+    path('reservations/user/<int:pk>', views.get_reservations_by_user_id),
+    path('reservations/destination/<int:pk>', views.get_reservations_by_destination_id),
+    path('reservations/<int:pk>', views.get_reservation_by_id),
+    path('reservations/create', views.create_reservation),
+    path('reservations/cancel/<int:pk>', views.cancel_reservation),
 ]

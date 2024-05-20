@@ -8,7 +8,6 @@ class User(models.Model):
     password = models.CharField(max_length=30, null=False, blank=False)
 
 
-
 class Destination(models.Model):
     id = models.AutoField(primary_key=True)
     location = models.CharField(max_length=100, null=False, blank=False)
@@ -21,3 +20,12 @@ class Destination(models.Model):
     offer = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
     image = models.CharField(null=False, blank=False, max_length=250)
 
+
+class Reservation(models.Model):
+    id = models.AutoField(primary_key=True)
+    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    idDestination = models.ForeignKey(Destination, on_delete=models.CASCADE)
+    numberOfPeople = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    totalPrice = models.IntegerField(null=False, blank=False, validators=[MinValueValidator(10)])
+    reservationDate = models.DateField(null=False, blank=False)
+    cancelled = models.BooleanField(null=False, default=False)
