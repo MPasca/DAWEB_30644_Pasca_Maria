@@ -5,26 +5,13 @@ import { Link } from "react-router-dom";
 export default function Login (){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    var destinationId = JSON.parse(sessionStorage.getItem("destinationId"));
 
     const handleClick = (e) => {
         e.preventDefault()
         const credentials = {email, password};
         console.log(credentials);
-        let id;
-        // send to backend for confirmation
-        if(email == "agent") {
-            if(password == "password_agent123") {
-                id = 0;
-                sessionStorage.setItem("userId", id);
-                window.location.href = `http://localhost:3000/agentdashboard`;
-            }
-            else {
-                throw new Error("wrong password");
-            }
-        }
-        const role = "agent"
-        sessionStorage.setItem("role", role);
-
+        
         fetch('http://localhost:8000/login', {
             method: 'POST',
             mode: 'cors',
@@ -32,10 +19,11 @@ export default function Login (){
             body:JSON.stringify({"email":email, "password":password})
         }).then(response => response.json())
             .then(data => {
-                const id = data.id;
-                sessionStorage.setItem("userId", id);
-                sessionStorage.setItem("role", "client");
-                window.location.href = `http://localhost:3000/`;
+                sessionStorage.setItem("userId", data.userId);
+                sessionStorage.setItem("role", data.role);
+                window.location.href = data.role == 'agent' && `http://localhost:3000/agentdashboard`||
+                                    !destinationId && `http://localhost:3000/` || 
+                                    destinationId && `http://localhost:3000/destination/${destinationId}`;
             })
             .catch((error) => console.error('Error when trying to log in:', error));
     }

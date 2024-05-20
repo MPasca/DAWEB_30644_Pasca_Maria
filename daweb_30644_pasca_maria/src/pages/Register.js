@@ -7,6 +7,8 @@ export default function Register () {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    var destinationId = JSON.parse(sessionStorage.getItem("destinationId"));
+
     const handleClick = (e) => {
         e.preventDefault()
         if(password != confirmPassword){
@@ -22,9 +24,7 @@ export default function Register () {
             }).then(response => response.json())
             .catch((error) => console.error('Error registering user:', error));
 
-    
-            window.location.href = `http://localhost:3000`;
-
+            window.location.href = !destinationId && `http://localhost:3000` || destinationId && `http://localhost:3000/destination/${destinationId}`;
         }
     }
 

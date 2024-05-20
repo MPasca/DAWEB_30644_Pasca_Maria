@@ -16,7 +16,6 @@ export default function UpdateDestination () {
         }).then(response => response.json())
             .then(data => { setDestinationToUpdate(data); })
             .catch((error) => console.error('Error fetching data:', error));
-
     }, [])
     
     const [newLocation, setNewLocation] = useState('');
@@ -59,10 +58,9 @@ export default function UpdateDestination () {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(updatedData)
         }).then(response => response.json())
-        .then(data => { console.log("destination updated: " + data.id);
-            // window.location.href = `http://localhost:3000/agentdashboard`;
-        })
         .catch((error) => console.error('Error fetching data:', error));
+
+        window.location.href = `http://localhost:3000/agentdashboard`;
     }
 
 

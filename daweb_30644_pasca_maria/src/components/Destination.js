@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Popup from 'reactjs-popup';
 
 export default function Destination(){
     var id = useParams().id;
-    var existingDestinations = JSON.parse(sessionStorage.getItem("existingDestinations"));
     sessionStorage.setItem("destinationId", id);
+    var userId = JSON.parse(sessionStorage.getItem("userId"));
 
     const [destination, setDestination] = useState();
 
@@ -49,13 +48,26 @@ export default function Destination(){
     const [seePopup, setSeePopup] = useState(false);
 
     const handleReserveBtn = () => {
+        var newReservation = {
+            "idUser": userId,
+            "idDestination": destination.id,
+            "numberOfPeople": noPeople
+        };
+
+        fetch(`http://localhost:8000/reservations/create`, {
+            method: 'POST',
+            mode: 'cors',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newReservation)
+        }).then(response => response.json())
+        .catch((error) => console.error('Error fetching data:', error));
+
         fetch(`http://localhost:8000/destinations/update/${id}`, {
             method: 'PUT',
             mode: 'cors',
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({"numberOfSeats": (destination.numberOfSeats - noPeople)})
         }).then(response => response.json())
-        .then(data => {console.log("number of seats updated: "); console.log(data.numberOfSeats);})
         .catch((error) => console.error('Error fetching data:', error));
 
         setSeePopup(true);
@@ -105,6 +117,7 @@ export default function Destination(){
                     <button className="btnPopup" onClick={handlePopupBtn}>Go back</button>
                 </div>}
                 {(!noPeople || noPeople == 0) && <Link to="/search_people"><button class="btnMaxCard">Reserve</button></Link>}
+                {!userId && <Link to="/login"><button class="btnMaxCard">Reserve</button></Link>}
                 {destination.isChildFriendly &&
                     <img className="icons" style={{marginLeft:"20px"}} src="/children.png"/>}
                 </div>
