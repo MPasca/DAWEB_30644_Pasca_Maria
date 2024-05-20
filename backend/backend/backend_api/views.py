@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from django.db.models.functions.datetime import ExtractDay
-from django.shortcuts import render
 from rest_framework import status
 
 from rest_framework.decorators import api_view
@@ -50,10 +48,11 @@ def delete_user(request, pk):
 
 @api_view(['POST'])
 def login_user(request):
+    if request.data.get('email') == 'agent' and request.data.get('password') == 'password_agent123':
+        return Response({'userId': 0, 'role': 'agent'}, status=status.HTTP_200_OK)
     user = User.objects.get(email=request.data.get('email'), password=request.data.get('password'))
     if user is not None:
-        serializer = UserSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'userId': user.id, 'role': 'client'}, status=status.HTTP_200_OK)
     return Response({"message": "incorrect login information"}, status=status.HTTP_403_FORBIDDEN)
 
 
