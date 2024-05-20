@@ -79,9 +79,10 @@ export default function Destination(){
 
     return(
         <div>
+            {userId == 0 && <Link to={`/destination/see_reservations/${id}`}><button class="btnPopup" style={{marginTop:"-20px", marginLeft: "75%", position:"absolute", padding:"7px"}}>See reservations</button></Link>}
             {destination && 
              <div class="divMaxCard">
-                <p class="lblMaxCard">{destination.location} {destination.isOffer ? " - 10% OFF" : " "}</p>
+                <p class="lblMaxCard">{destination.location}</p>
                 <hr style={{border:"1px solid black", width:"60%", marginLeft:"3%"}}></hr>
                 <div style={{display:"inline-flex", marginBottom:"-20px"}}>
                     <img className="imgMaxCard" src={destination.image}/>
