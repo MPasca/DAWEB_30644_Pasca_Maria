@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import UpdateDestination from "./components/UpdateDestination";
 import AddDestination from './components/AddDestination';
 import ShowReservationsForDestination from './components/ShowReservationsForDestination'
+import ShowReservationsStatistic from './pages/ShowReservationsStatistic';
 
 import { useEffect, useState } from 'react';
 
@@ -103,6 +104,7 @@ export default function App() {
           <Route path="/update_destination" element={<UpdateDestination/>}/>
           <Route path="/add_destination" element={<AddDestination/>}/>
           <Route path={`/destination/see_reservations/:id`} element={<ShowReservationsForDestination/>}/>
+          <Route path="/destinations/reservations_statistic" element={<ShowReservationsStatistic/>}/>
         </Routes>
       </BrowserRouter>
     </div>
