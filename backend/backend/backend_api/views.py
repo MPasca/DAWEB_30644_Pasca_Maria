@@ -1,3 +1,4 @@
+import calendar
 from datetime import datetime
 
 from rest_framework import status
@@ -157,6 +158,13 @@ def get_reservations_by_user_id(request, pk):
 
 
 @api_view(['GET'])
+def get_reservations(request):
+    reservations = Reservation.objects.all()
+    serializer = ReservationSerializer(reservations, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def get_reservations_by_destination_id(request, pk):
     reservations = Reservation.objects.filter(idDestination=pk)
     serializer = ReservationSerializer(reservations, many=True)
@@ -171,3 +179,24 @@ def cancel_reservation(request, pk):
         serializer.save()
         return Response({"message": "Reservation cancelled successfully"}, status=status.HTTP_200_OK)
     return Response({"message": "Reservation could not be cancelled"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+
+@api_view(['GET'])
+def get_stats(request):
+    stats = []
+    reservations = Reservation.objects.filter(cancelled=False)
+    destinations = Destination.objects.all()
+    for destination in destinations:
+        reservationsPerDestination = reservations.filter(idDestination=destination).count()
+        totalPeople = 0
+        for reservation in reservations.filter(idDestination=destination):
+            totalPeople += reservation.numberOfPeople
+
+        aux = destination.startDate.month
+        stats.append({"destination":destination.location,
+                      "date":calendar.month_name[aux],
+                      "totalPeople":totalPeople,
+                      "totalReservations":reservationsPerDestination})
+
+    return Response(stats, status=status.HTTP_200_OK)
+

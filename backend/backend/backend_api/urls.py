@@ -17,7 +17,10 @@ urlpatterns = [
 
     path('reservations/user/<int:pk>', views.get_reservations_by_user_id),
     path('reservations/destination/<int:pk>', views.get_reservations_by_destination_id),
+    path('reservations', views.get_reservations),
     path('reservations/<int:pk>', views.get_reservation_by_id),
     path('reservations/create', views.create_reservation),
     path('reservations/cancel/<int:pk>', views.cancel_reservation),
+
+    path('stats', views.get_stats)
 ]
