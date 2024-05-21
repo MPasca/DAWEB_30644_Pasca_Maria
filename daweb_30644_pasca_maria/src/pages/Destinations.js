@@ -17,6 +17,8 @@ export default function Destinations(){
     var storageStartDate = JSON.parse(sessionStorage.getItem("startDate"));
     var storageEndDate = JSON.parse(sessionStorage.getItem("endDate"));
 
+    const userId = JSON.parse(sessionStorage.getItem("userId"));
+
     var onlyOffers = JSON.parse(sessionStorage.getItem("showOffers"));
 
     const [existingDestinations, setExistingDestinations] = useState();
@@ -129,7 +131,8 @@ export default function Destinations(){
                     </LocalizationProvider>
                     <btn className="btnNav" style={{marginLeft:"10%", paddingLeft:"5%"}} onClick={handleFilterClick}>Filter</btn>
                 </div>
-            <btn className="btnNav" onClick={showOffersOnly} style={{display:"inline-flex", width:"250px", height:"100px", marginLeft:"10%", padding:".5%", paddingLeft:"2%"}}>Show offers only</btn>
+                {userId != 0 && <btn className="btnNav" onClick={showOffersOnly} style={{display:"inline-flex", width:"250px", height:"100px", marginLeft:"10%", padding:".5%", paddingLeft:"2%"}}>Show offers only</btn>}
+                {userId == 0 && <Link to="/destinations/reservations_statistic"><btn className="btnNav" style={{display:"inline-flex", width:"250px", height:"100px", marginLeft:"10%", padding:".5%", paddingLeft:"2%"}}>Show statistics</btn></Link>}
             </div>
             <h1 class="h1Title">Destinations for you</h1>
             <hr class="titleLine" style={{marginBottom:"50px", width:"auto", marginRight:"30%"}}></hr>

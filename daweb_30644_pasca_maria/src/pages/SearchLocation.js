@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function SearchLocation(){
-    var existingLocations = JSON.parse(sessionStorage.getItem("existingDestinations")).map((destination) => destination.location);
+    var existingLocations = Array.from(new Set(JSON.parse(sessionStorage.getItem("existingDestinations")).map((destination) => destination.location)));    
 
     
     const handleClick = () => {
