@@ -28,6 +28,7 @@ export default function AddDestination () {
     const [startDatePicker, setStartDatePicker] = useState(dayjs());
     const [endDatePicker, setEndDatePicker] = useState(dayjs());
 
+    var jwt = sessionStorage.getItem("jwt");
 
     const handleClick = () => {
         const newDestination = {
@@ -45,7 +46,10 @@ export default function AddDestination () {
         fetch('http://localhost:8000/destinations/create', {
             method: 'POST',
             mode: 'cors',
-            headers:{"Content-Type":"application/json"},
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
             body:JSON.stringify(newDestination)
         }).then(response => response.json())
         .then(data => {console.log("new destination added: " + data.id)})

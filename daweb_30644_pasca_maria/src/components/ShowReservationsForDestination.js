@@ -8,13 +8,18 @@ export default function ShowReservationsForDestination(){
 
     var userId = sessionStorage.getItem("userId");
 
+    var jwt = sessionStorage.getItem("jwt");
+
     const [reservations, setReservations] = useState();
 
     useEffect(() => {
         fetch(`http://localhost:8000/reservations/destination/${id}`, {
             method: 'GET',
             mode: 'cors',
-            headers:{"Content-Type":"application/json"}
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${jwt}`
+            }
         }).then(response => response.json())
             .then(data => { setReservations(data); })
             .catch((error) => console.error('Error fetching data:', error));

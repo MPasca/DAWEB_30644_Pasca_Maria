@@ -53,21 +53,22 @@ export default function Destination(){
             "idDestination": destination.id,
             "numberOfPeople": noPeople
         };
-
-        fetch(`http://localhost:8000/reservations/create`, {
+        console.log(newReservation);
+        fetch('http://localhost:8000/reservations/create', {
             method: 'POST',
             mode: 'cors',
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(newReservation)
-        }).then(response => response.json())
-        .catch((error) => console.error('Error fetching data:', error));
-
-        fetch(`http://localhost:8000/destinations/update/${id}`, {
-            method: 'PUT',
-            mode: 'cors',
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({"numberOfSeats": (destination.numberOfSeats - noPeople)})
-        }).then(response => response.json())
+        }).then(response => {response.json(); console.log(response)})
+        .then(() => {
+            fetch(`http://localhost:8000/destinations/update/${id}`, {
+                method: 'PUT',
+                mode: 'cors',
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({"numberOfSeats": (destination.numberOfSeats - noPeople)})
+            }).then(response => response.json())
+            .catch((error) => console.error('Error fetching data:', error));    
+        })
         .catch((error) => console.error('Error fetching data:', error));
 
         setSeePopup(true);
@@ -95,8 +96,8 @@ export default function Destination(){
                             {getMonth(destination.endDate) < 10 ? "0" + parseInt(getMonth(destination.endDate)+1) : parseInt(getMonth(destination.endDate)+1)}
                         </p>
                         <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%", marginTop:"-20px"}}>Seats available: {destination.numberOfSeats}</p>
-                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%", marginTop:"-20px"}}>Price per night: {destination.price * (100 - destination.offer)/100}€ / night</p>
-                        <p class="txtMaxCard" style={{fontSize:"24px", marginLeft:"25%", marginTop: "-20px", fontWeight:"500", color:"red"}}>BEFORE DISCOUNT: {destination.price}€ / night</p>
+                        <p class="txtMaxCard" style={{fontSize:"34px", marginLeft:"25%", marginTop:"-20px"}}>Price per night: {destination.price * (100 - destination.offer)/100}€ / person</p>
+                        <p class="txtMaxCard" style={{fontSize:"24px", marginLeft:"25%", marginTop: "-20px", fontWeight:"500", color:"red"}}>BEFORE DISCOUNT: {destination.price}€ / person</p>
                         <p class="txtMaxCard" style={{fontSize:"42px", marginLeft:"10px", marginTop:"0px", fontWeight: "650"}}>
                             Total price: {(destination.price * (100 - destination.offer)/100) * getNoDays(destination.startDate, destination.endDate)}€ /  
                             {getNoDays(destination.startDate, destination.endDate)} nights</p>

@@ -8,6 +8,8 @@ export default function UpdateDestination () {
 
     const [destinationToUpdate, setDestinationToUpdate] = useState([]);
 
+    var jwt = sessionStorage.getItem("jwt");
+
     useEffect(() => {
         fetch(`http://localhost:8000/destinations/${changeId}`, {
             method: 'GET',
@@ -55,7 +57,10 @@ export default function UpdateDestination () {
         fetch(`http://localhost:8000/destinations/update/${changeId}`, {
             method: 'PUT',
             mode: 'cors',
-            headers:{"Content-Type":"application/json"},
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
             body:JSON.stringify(updatedData)
         }).then(response => response.json())
         .catch((error) => console.error('Error fetching data:', error));

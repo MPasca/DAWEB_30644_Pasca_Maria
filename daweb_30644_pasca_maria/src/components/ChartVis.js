@@ -20,15 +20,18 @@ export default function ChartVis ({byReservation, chosenLocation}) {
   ]);
 
 
-  var destinations;
   var values;
+  var jwt = sessionStorage.getItem("jwt");
 
 
   useEffect(() => {
       fetch('http://localhost:8000/stats', {
           method: 'GET',
           mode: 'cors',
-          headers:{"Content-Type":"application/json"}
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${jwt}`
+          }
       }).then(response => response.json())
           .then(stats => { setStats(stats); })
           .catch((error) => console.error('Error fetching stats:', error));

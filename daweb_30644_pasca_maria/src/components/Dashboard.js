@@ -9,6 +9,8 @@ export default function Dashboard () {
 
     const [existingDestinations, setExistingDestinations] = useState([]);
 
+    var jwt = sessionStorage.getItem("jwt");
+
     useEffect(() => {
         fetch('http://localhost:8000/destinations', {
             method: 'GET',
@@ -34,7 +36,10 @@ export default function Dashboard () {
             fetch(`http://localhost:8000/destinations/delete/${deleteId}`, {
                 method: 'DELETE',
                 mode: 'cors',
-                headers:{"Content-Type":"application/json"}
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization": `Bearer ${jwt}`
+                }
             }).then(response => response.json())
                 .then(data => { console.log("deleted element with id: " + deleteId) })
                 .catch((error) => console.error('Error deleting destination:', error));
@@ -44,7 +49,10 @@ export default function Dashboard () {
             fetch(`http://localhost:8000/destinations/delete/${existingDestinations[0].id}`, {
                 method: 'DELETE',
                 mode: 'cors',
-                headers:{"Content-Type":"application/json"}
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization": `Bearer ${jwt}`
+                }
             }).then(response => response.json())
                 .then(data => { console.log("deleted element with id: " + deleteId) })
                 .catch((error) => console.error('Error deleting destination:', error));

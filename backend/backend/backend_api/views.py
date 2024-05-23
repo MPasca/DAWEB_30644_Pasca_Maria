@@ -3,12 +3,12 @@ from datetime import datetime
 
 from rest_framework import status
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import User, Destination, Reservation
 from .serializers import UserSerializer, DestinationSerializer, ReservationSerializer
-
 
 # users actions
 
@@ -86,6 +86,7 @@ def get_destination_by_id(request, pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_destination(request):
     serializer = DestinationSerializer(data=request.data)
     if serializer.is_valid():
@@ -105,6 +106,7 @@ def update_destination(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_destination(request, pk):
     destination = Destination.objects.get(id=pk)
     destination.delete()
@@ -131,7 +133,9 @@ def create_reservation(request):
         "idDestination": request.data['idDestination'],
         "numberOfPeople": request.data['numberOfPeople'],
         "reservationDate": datetime.now().date(),
-        "totalPrice": destination.price * (destination.endDate - destination.startDate).days
+        "totalPrice": destination.price *
+                      (destination.endDate - destination.startDate).days * (100 - destination.offer)/100
+                      * request.data['numberOfPeople']
     }
 
     serializer = ReservationSerializer(data=reservation)
@@ -142,6 +146,7 @@ def create_reservation(request):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def get_reservation_by_id(request, pk):
     reservation = Reservation.objects.get(id=pk)
     if reservation is not None:
@@ -151,21 +156,27 @@ def get_reservation_by_id(request, pk):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def get_reservations_by_user_id(request, pk):
+
     reservations = Reservation.objects.filter(idUser=pk)
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def get_reservations(request):
+
     reservations = Reservation.objects.all()
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def get_reservations_by_destination_id(request, pk):
+
     reservations = Reservation.objects.filter(idDestination=pk)
     serializer = ReservationSerializer(reservations, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -182,7 +193,9 @@ def cancel_reservation(request, pk):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def get_stats(request):
+
     stats = []
     reservations = Reservation.objects.filter(cancelled=False)
     destinations = Destination.objects.all()
@@ -193,10 +206,9 @@ def get_stats(request):
             totalPeople += reservation.numberOfPeople
 
         aux = destination.startDate.month
-        stats.append({"destination":destination.location,
-                      "date":calendar.month_name[aux],
-                      "totalPeople":totalPeople,
-                      "totalReservations":reservationsPerDestination})
+        stats.append({"destination": destination.location,
+                      "date": calendar.month_name[aux],
+                      "totalPeople": totalPeople,
+                      "totalReservations": reservationsPerDestination})
 
     return Response(stats, status=status.HTTP_200_OK)
-

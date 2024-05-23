@@ -9,8 +9,6 @@ export default function Login (){
 
     const handleClick = (e) => {
         e.preventDefault()
-        const credentials = {email, password};
-        console.log(credentials);
         
         fetch('http://localhost:8000/login', {
             method: 'POST',
@@ -21,10 +19,26 @@ export default function Login (){
             .then(data => {
                 sessionStorage.setItem("userId", data.userId);
                 sessionStorage.setItem("role", data.role);
-                window.location.href = data.role == 'agent' && `http://localhost:3000/agentdashboard`||
-                                    !destinationId && `http://localhost:3000/` || 
-                                    destinationId && `http://localhost:3000/destination/${destinationId}`;
+
+                if(data.role == 'agent') {
+                    fetch('http://localhost:8000/api/token/', {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers:{"Content-Type":"application/json"},
+                        body:JSON.stringify({"username":email, "password":password})
+                    }).then(response => response.json())
+                    .then(data => {
+                        sessionStorage.setItem("jwt", data.access);
+                    })
+                    .catch((error) => console.error('Error generating JWT token:', error));
+            
+                }
             })
+            // .then(() => {
+            //     window.location.href = sessionStorage.getItem("jwt") && 'http://localhost:3000/agentdashboard'||
+            //     !destinationId && `http://localhost:3000/` || 
+            //     destinationId && `http://localhost:3000/destination/${destinationId}`;
+            // })
             .catch((error) => console.error('Error when trying to log in:', error));
     }
 
